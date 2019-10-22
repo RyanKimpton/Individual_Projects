@@ -1,20 +1,22 @@
 package com.nationwide.individualproject.data;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
 public class Boulder {
     @Id
-    private int index;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long index;
     private String grade;
-    private Date date;
+    private String date;
     private String location;
     private String climber;
 
-    public Boulder(int I, String G, Date D, String L, String C){
-        index = I;
+    public Boulder(String G, String D, String L, String C){
         grade = G;
         date = D;
         location = L;
@@ -31,11 +33,11 @@ public class Boulder {
         this.grade = grade;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

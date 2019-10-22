@@ -1,22 +1,23 @@
 package com.nationwide.individualproject.data;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
 
 @Entity
 public class Lead {
     @Id
-    private int index;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long index;
     private String grade;
     private int height;
-    private Date date;
+    private String date;
     private String location;
     private String climber;
     private String partner;
 
-    public Lead(int I, String G, int H, Date D, String L, String C, String P){
-        index = I;
+    public Lead(String G, int H, String D, String L, String C, String P){
         grade = G;
         height = H;
         date = D;
@@ -36,11 +37,11 @@ public class Lead {
         this.grade = grade;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

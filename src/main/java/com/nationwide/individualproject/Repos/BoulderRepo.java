@@ -18,6 +18,6 @@ public interface BoulderRepo extends JpaRepository<Boulder, Integer> {
     ArrayList<Boulder> findByGradeLessThanEqual(String G);
     ArrayList<Boulder> findByGradeBetween(String G1, String G2);
     ArrayList<Boulder> findByClimber(String N);
-    ArrayList<Boulder> findByDate(Date D);
+    ArrayList<Boulder> findByDate(String D);
     ArrayList<Boulder> findByLocationContainingIgnoreCase(String G);
 }

@@ -24,7 +24,7 @@ public class BoulderController {
     private BoulderRepo repo;
 
     @PostMapping("/boulder/add/{G}/{D}/{L}/{C}")
-    public Boulder boulderAdd(@PathVariable String G, @PathVariable Date D, @PathVariable String L, @PathVariable String C){
+    public Boulder boulderAdd(@PathVariable String G, @PathVariable String D, @PathVariable String L, @PathVariable String C){
         Boulder bould = new Boulder(G, D, L, C);
         repo.saveAndFlush(bould);
         return bould;
@@ -76,7 +76,7 @@ public class BoulderController {
     }
 
     @GetMapping("/boulder/findBy/Date/{D}")
-    public ArrayList<Boulder> findByDate(@PathVariable Date D){
+    public ArrayList<Boulder> findByDate(@PathVariable String D){
         return repo.findByDate(D);
     }
 

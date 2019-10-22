@@ -22,7 +22,7 @@ public class TopRopeController {
     }
 
     @PostMapping("/topRope/add/{G}/{H}/{D}/{L}/{C}/{P}")
-    public TopRope TopRopeAdd(@PathVariable String G, @PathVariable int H, @PathVariable Date D, @PathVariable String L, @PathVariable String C, @PathVariable String P){
+    public TopRope TopRopeAdd(@PathVariable String G, @PathVariable int H, @PathVariable String D, @PathVariable String L, @PathVariable String C, @PathVariable String P){
         TopRope tr = new TopRope(G, H, D, L, C, P);
         repo.saveAndFlush(tr);
         return tr;
@@ -94,7 +94,7 @@ public class TopRopeController {
     }
 
     @GetMapping("/topRope/findBy/date/{D}")
-    public ArrayList<TopRope> findByDate(@PathVariable Date D){
+    public ArrayList<TopRope> findByDate(@PathVariable String D){
         return repo.findByDate(D);
     }
 

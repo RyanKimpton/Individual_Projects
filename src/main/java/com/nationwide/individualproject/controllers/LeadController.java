@@ -22,7 +22,7 @@ public class LeadController {
     }
 
     @PostMapping("/lead/add/{G}/{H}/{D}/{L}/{C}/{P}")
-    public Lead LeadAdd(@PathVariable String G, @PathVariable int H, @PathVariable Date D, @PathVariable String L, @PathVariable String C, @PathVariable String P){
+    public Lead LeadAdd(@PathVariable String G, @PathVariable int H, @PathVariable String D, @PathVariable String L, @PathVariable String C, @PathVariable String P){
         Lead ld = new Lead(G, H, D, L, C, P);
         repo.saveAndFlush(ld);
         return ld;
@@ -94,7 +94,7 @@ public class LeadController {
     }
 
     @GetMapping("/lead/findBy/date/{D}")
-    public ArrayList<Lead> findByDate(@PathVariable Date D){
+    public ArrayList<Lead> findByDate(@PathVariable String D){
         return repo.findByDate(D);
     }
 

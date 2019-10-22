@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 @RestController
 public class SpeedController {
@@ -21,7 +20,7 @@ public class SpeedController {
     }
 
     @PostMapping("/speed/add/{T}/{D}/{L}/{C}")
-    public Speed SpeedAdd(@PathVariable float T, @PathVariable Date D, @PathVariable String L, @PathVariable String C){
+    public Speed SpeedAdd(@PathVariable float T, @PathVariable String D, @PathVariable String L, @PathVariable String C){
         Speed sp = new Speed(T, D, L, C);
         repo.saveAndFlush(sp);
         return sp;

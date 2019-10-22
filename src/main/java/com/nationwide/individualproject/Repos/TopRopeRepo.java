@@ -22,7 +22,7 @@ public interface TopRopeRepo extends JpaRepository<TopRope, Integer> {
     ArrayList<TopRope> findByHeightLessThan(int H);
     ArrayList<TopRope> findByHeightLessThanEqual(int H);
     ArrayList<TopRope> findByHeightBetween(int H1, int H2);
-    ArrayList<TopRope> findByDate(Date D);
+    ArrayList<TopRope> findByDate(String D);
     ArrayList<TopRope> findByLocation(String L);
     ArrayList<TopRope> findByClimber(String C);
     ArrayList<TopRope> findByPartner(String P);
