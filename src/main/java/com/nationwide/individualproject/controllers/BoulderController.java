@@ -64,11 +64,11 @@ public class BoulderController {
     public ArrayList<Boulder> findByGradeBetween(@PathVariable String G1, @PathVariable String G2){
         return repo.findByGradeBetween(G1, G2);
     }
-
-    @GetMapping("/boulder/findBy/location/{L}")
-    public ArrayList<Boulder> findByLocation(@PathVariable String L){
-        return repo.findByLocation(L);
-    }
+//
+//    @GetMapping("/boulder/findBy/location/{L}")
+//    public ArrayList<Boulder> findByLocation(@PathVariable String L){
+//        return repo.findByLocation(L);
+//    }
 
     @GetMapping("/boulder/findBy/Climber/{C}")
     public ArrayList<Boulder> findByClimber(@PathVariable String C){
@@ -80,4 +80,8 @@ public class BoulderController {
         return repo.findByDate(D);
     }
 
+    @GetMapping("/boulder/findBy/location/{L}")
+    public ArrayList<Boulder> findByLocationContaining(@PathVariable String L){
+        return repo.findByLocationContainingIgnoreCase(L);
+    }
 }

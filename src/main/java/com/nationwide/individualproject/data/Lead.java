@@ -7,6 +7,7 @@ import java.util.Date;
 @Entity
 public class Lead {
     @Id
+    private int index;
     private String grade;
     private int height;
     private Date date;
@@ -14,7 +15,8 @@ public class Lead {
     private String climber;
     private String partner;
 
-    public Lead(String G, int H, Date D, String L, String C, String P){
+    public Lead(int I, String G, int H, Date D, String L, String C, String P){
+        index = I;
         grade = G;
         height = H;
         date = D;

@@ -7,12 +7,14 @@ import java.util.Date;
 @Entity
 public class Boulder {
     @Id
+    private int index;
     private String grade;
     private Date date;
     private String location;
     private String climber;
 
-    public Boulder(String G, Date D, String L, String C){
+    public Boulder(int I, String G, Date D, String L, String C){
+        index = I;
         grade = G;
         date = D;
         location = L;

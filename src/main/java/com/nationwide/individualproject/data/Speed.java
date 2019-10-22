@@ -7,12 +7,14 @@ import java.util.Date;
 @Entity
 public class Speed {
     @Id
+    private int index;
     private float time;
     private Date date;
     private String location;
     private String climber;
 
-    public Speed(float T, Date D, String L, String C){
+    public Speed(int I, float T, Date D, String L, String C){
+        index = I;
         time = T;
         date = D;
         location = L;
