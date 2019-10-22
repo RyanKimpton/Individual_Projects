@@ -80,9 +80,31 @@ public class BoulderController {
     }
 
     @PutMapping("/boulder/update/grade/{I}/{G}")
-    public void updateBoulder(@PathVariable long I, @PathVariable String G){
+    public void updateBoulderGrade(@PathVariable long I, @PathVariable String G){
         Boulder boulderInDB = repo.findByIndex(I);
         boulderInDB.setGrade(G);
         repo.saveAndFlush(boulderInDB);
     }
+
+    @PutMapping("/boulder/update/date/{I}/{D}")
+    public void updateBoulderDate(@PathVariable long I, @PathVariable String D){
+        Boulder boulderInDB = repo.findByIndex(I);
+        boulderInDB.setDate(D);
+        repo.saveAndFlush(boulderInDB);
+    }
+
+    @PutMapping("/boulder/update/date/{I}/{L}")
+    public void updateBoulderLocation(@PathVariable long I, @PathVariable String L){
+        Boulder boulderInDB = repo.findByIndex(I);
+        boulderInDB.setLocation(L);
+        repo.saveAndFlush(boulderInDB);
+    }
+
+    @PutMapping("/boulder/update/date/{I}/{C}")
+    public void updateBoulderCLimber(@PathVariable long I, @PathVariable String C){
+        Boulder boulderInDB = repo.findByIndex(I);
+        boulderInDB.setClimber(C);
+        repo.saveAndFlush(boulderInDB);
+    }
+
 }

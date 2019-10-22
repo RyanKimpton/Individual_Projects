@@ -3,10 +3,7 @@ package com.nationwide.individualproject.controllers;
 import com.nationwide.individualproject.Repos.LeadRepo;
 import com.nationwide.individualproject.data.Lead;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -116,5 +113,50 @@ public class LeadController {
     public Lead findByIndex(@PathVariable long I){
         return repo.findByIndex(I);
     }
+
+    @PutMapping("/lead/update/date/{I}/{D}")
+    public void updateLeadDate(@PathVariable long I, @PathVariable String D){
+        Lead leadInDB = repo.findByIndex(I);
+        leadInDB.setDate(D);
+        repo.saveAndFlush(leadInDB);
+    }
+
+    @PutMapping("/lead/update/grade/{I}/{G}")
+    public void updateLeadGrade(@PathVariable long I, @PathVariable String G){
+        Lead leadInDB = repo.findByIndex(I);
+        leadInDB.setGrade(G);
+        repo.saveAndFlush(leadInDB);
+    }
+
+    @PutMapping("/lead/update/height/{I}/{H}")
+    public void updateLeadHeight(@PathVariable long I, @PathVariable int H){
+        Lead leadInDB = repo.findByIndex(I);
+        leadInDB.setHeight(H);
+        repo.saveAndFlush(leadInDB);
+    }
+
+    @PutMapping("/lead/update/location/{I}/{L}")
+    public void updateLeadLocation(@PathVariable long I, @PathVariable String L){
+        Lead leadInDB = repo.findByIndex(I);
+        leadInDB.setLocation(L);
+        repo.saveAndFlush(leadInDB);
+    }
+
+    @PutMapping("/lead/update/climber/{I}/{C}")
+    public void updateLeadClimber(@PathVariable long I, @PathVariable String C){
+        Lead leadInDB = repo.findByIndex(I);
+        leadInDB.setClimber(C);
+        repo.saveAndFlush(leadInDB);
+    }
+
+    @PutMapping("/lead/update/partner/{I}/{P}")
+    public void updateLeadPartner(@PathVariable long I, @PathVariable String P){
+        Lead leadInDB = repo.findByIndex(I);
+        leadInDB.setPartner(P);
+        repo.saveAndFlush(leadInDB);
+    }
+
+
+
 
 }

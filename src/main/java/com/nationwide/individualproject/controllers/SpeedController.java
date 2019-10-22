@@ -3,10 +3,7 @@ package com.nationwide.individualproject.controllers;
 import com.nationwide.individualproject.Repos.SpeedRepo;
 import com.nationwide.individualproject.data.Speed;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -75,6 +72,35 @@ public class SpeedController {
     public Speed findByIndex(@PathVariable long I){
         return repo.findByIndex(I);
     }
+
+    @PutMapping("/speed/update/date/{I}/{D}")
+    public void updateSpeedDate(@PathVariable long I, @PathVariable String D){
+        Speed speedInDB = repo.findByIndex(I);
+        speedInDB.setDate(D);
+        repo.saveAndFlush(speedInDB);
+    }
+
+    @PutMapping("/speed/update/time/{I}/{T}")
+    public void updateSpeedTime(@PathVariable long I, @PathVariable float T){
+        Speed speedInDB = repo.findByIndex(I);
+        speedInDB.setTime(T);
+        repo.saveAndFlush(speedInDB);
+    }
+
+    @PutMapping("/speed/update/location/{I}/{L}")
+    public void updateSpeedLocation(@PathVariable long I, @PathVariable String L){
+        Speed speedInDB = repo.findByIndex(I);
+        speedInDB.setLocation(L);
+        repo.saveAndFlush(speedInDB);
+    }
+
+    @PutMapping("/speed/update/climber/{I}/{C}")
+    public void updateSpeedClimber(@PathVariable long I, @PathVariable String C){
+        Speed speedInDB = repo.findByIndex(I);
+        speedInDB.setClimber(C);
+        repo.saveAndFlush(speedInDB);
+    }
+
 
 
 }

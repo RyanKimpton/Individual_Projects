@@ -3,10 +3,7 @@ package com.nationwide.individualproject.controllers;
 import com.nationwide.individualproject.Repos.TopRopeRepo;
 import com.nationwide.individualproject.data.TopRope;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -114,6 +111,48 @@ public class TopRopeController {
     @GetMapping("/topRope/findBy/index/{I}")
     public TopRope findByIndex(@PathVariable long I){
         return repo.findByIndex(I);
+    }
+
+    @PutMapping("/topRope/update/date/{I}/{D}")
+    public void updateTopRopeDate(@PathVariable long I, @PathVariable String D){
+        TopRope topRopeInDB = repo.findByIndex(I);
+        topRopeInDB.setDate(D);
+        repo.saveAndFlush(topRopeInDB);
+    }
+
+    @PutMapping("/topRope/update/grade/{I}/{G}")
+    public void updateTopRopeGrade(@PathVariable long I, @PathVariable String G){
+        TopRope topRopeInDB = repo.findByIndex(I);
+        topRopeInDB.setGrade(G);
+        repo.saveAndFlush(topRopeInDB);
+    }
+
+    @PutMapping("/topRope/update/height/{I}/{H}")
+    public void updateTopRopeHeight(@PathVariable long I, @PathVariable int H){
+        TopRope topRopeInDB = repo.findByIndex(I);
+        topRopeInDB.setHeight(H);
+        repo.saveAndFlush(topRopeInDB);
+    }
+
+    @PutMapping("/topRope/update/location/{I}/{L}")
+    public void updateTopRopeLocation(@PathVariable long I, @PathVariable String L){
+        TopRope topRopeInDB = repo.findByIndex(I);
+        topRopeInDB.setLocation(L);
+        repo.saveAndFlush(topRopeInDB);
+    }
+
+    @PutMapping("/topRope/update/climber/{I}/{C}")
+    public void updateTopRopeClimber(@PathVariable long I, @PathVariable String C){
+        TopRope topRopeInDB = repo.findByIndex(I);
+        topRopeInDB.setClimber(C);
+        repo.saveAndFlush(topRopeInDB);
+    }
+
+    @PutMapping("/topRope/update/partner/{I}/{P}")
+    public void updateTopRopePartner(@PathVariable long I, @PathVariable String P){
+        TopRope topRopeInDB = repo.findByIndex(I);
+        topRopeInDB.setPartner(P);
+        repo.saveAndFlush(topRopeInDB);
     }
 
 }
