@@ -71,5 +71,10 @@ public class SpeedController {
         return repo.findByClimber(C);
     }
 
+    @GetMapping("/speed/findBy/index/{I}")
+    public Speed findByIndex(@PathVariable long I){
+        return repo.findByIndex(I);
+    }
+
 
 }

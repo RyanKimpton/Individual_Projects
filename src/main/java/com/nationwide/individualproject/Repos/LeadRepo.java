@@ -5,10 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 @Repository
 public interface LeadRepo extends JpaRepository<Lead, Integer> {
+    Lead findByIndex(long I);
     ArrayList<Lead> findAll();
     ArrayList<Lead> findByGrade(String G);
     ArrayList<Lead> findByGradeGreaterThan(String G);

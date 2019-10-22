@@ -3,25 +3,19 @@ package com.nationwide.individualproject.controllers;
 import com.nationwide.individualproject.Repos.BoulderRepo;
 import com.nationwide.individualproject.data.Boulder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 
 @RestController
 public class BoulderController {
-//    private BoulderRepo repo;
-//
-//    @Autowired
-//    public BoulderController(BoulderRepo repo){
-//        this.repo = repo;
-//    }
+    private BoulderRepo repo;
 
     @Autowired
-    private BoulderRepo repo;
+    public BoulderController(BoulderRepo repo){
+        this.repo = repo;
+    }
 
     @PostMapping("/boulder/add/{G}/{D}/{L}/{C}")
     public Boulder boulderAdd(@PathVariable String G, @PathVariable String D, @PathVariable String L, @PathVariable String C){
@@ -33,6 +27,11 @@ public class BoulderController {
     @GetMapping("/boulder/showAll")
     public ArrayList<Boulder> showAll(){
         return repo.findAll();
+    }
+
+    @GetMapping("/boulder/findBy/index/{I}")
+    public Boulder findByIndex(@PathVariable long I){
+        return repo.findByIndex(I);
     }
 
     @GetMapping("/boulder/findBy/grade/{G}")
@@ -64,11 +63,6 @@ public class BoulderController {
     public ArrayList<Boulder> findByGradeBetween(@PathVariable String G1, @PathVariable String G2){
         return repo.findByGradeBetween(G1, G2);
     }
-//
-//    @GetMapping("/boulder/findBy/location/{L}")
-//    public ArrayList<Boulder> findByLocation(@PathVariable String L){
-//        return repo.findByLocation(L);
-//    }
 
     @GetMapping("/boulder/findBy/Climber/{C}")
     public ArrayList<Boulder> findByClimber(@PathVariable String C){
@@ -83,5 +77,12 @@ public class BoulderController {
     @GetMapping("/boulder/findBy/location/{L}")
     public ArrayList<Boulder> findByLocationContaining(@PathVariable String L){
         return repo.findByLocationContainingIgnoreCase(L);
+    }
+
+    @PutMapping("/boulder/update/grade/{I}/{G}")
+    public void updateBoulder(@PathVariable long I, @PathVariable String G){
+        Boulder boulderInDB = repo.findByIndex(I);
+        boulderInDB.setGrade(G);
+        repo.saveAndFlush(boulderInDB);
     }
 }

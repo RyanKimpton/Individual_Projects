@@ -5,10 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 @Repository
 public interface TopRopeRepo extends JpaRepository<TopRope, Integer> {
+    TopRope findByIndex(long I);
     ArrayList<TopRope> findAll();
     ArrayList<TopRope> findByGrade(String G);
     ArrayList<TopRope> findByGradeGreaterThan(String G);

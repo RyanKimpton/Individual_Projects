@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 
 @RestController
@@ -111,6 +110,11 @@ public class LeadController {
     @GetMapping("/lead/findBy/partner/{P}")
     public ArrayList<Lead> findByPartner(@PathVariable String P){
         return repo.findByPartner(P);
+    }
+
+    @GetMapping("/lead/findBy/index/{I}")
+    public Lead findByIndex(@PathVariable long I){
+        return repo.findByIndex(I);
     }
 
 }

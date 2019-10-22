@@ -6,10 +6,10 @@ import org.springframework.stereotype.Repository;
 
 
 import java.util.ArrayList;
-import java.util.Date;
 
 @Repository
 public interface BoulderRepo extends JpaRepository<Boulder, Integer> {
+    Boulder findByIndex(long I);
     ArrayList<Boulder> findAll();
     ArrayList<Boulder> findByGrade(String G);
     ArrayList<Boulder> findByGradeGreaterThan(String G);

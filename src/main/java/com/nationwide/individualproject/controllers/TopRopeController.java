@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.Date;
-
 
 @RestController
 public class TopRopeController {
@@ -111,6 +109,11 @@ public class TopRopeController {
     @GetMapping("/topRope/findBy/partner/{P}")
     public ArrayList<TopRope> findByPartner(@PathVariable String P){
         return repo.findByPartner(P);
+    }
+
+    @GetMapping("/topRope/findBy/index/{I}")
+    public TopRope findByIndex(@PathVariable long I){
+        return repo.findByIndex(I);
     }
 
 }
