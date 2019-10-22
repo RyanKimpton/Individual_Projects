@@ -156,6 +156,11 @@ public class LeadController {
         repo.saveAndFlush(leadInDB);
     }
 
+    @DeleteMapping("/lead/delete/{I}")
+    public void deleteLead(@PathVariable long I){
+        repo.delete(repo.findByIndex(I));
+    }
+
 
 
 

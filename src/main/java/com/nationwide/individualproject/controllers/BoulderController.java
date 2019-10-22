@@ -93,18 +93,23 @@ public class BoulderController {
         repo.saveAndFlush(boulderInDB);
     }
 
-    @PutMapping("/boulder/update/date/{I}/{L}")
+    @PutMapping("/boulder/update/location/{I}/{L}")
     public void updateBoulderLocation(@PathVariable long I, @PathVariable String L){
         Boulder boulderInDB = repo.findByIndex(I);
         boulderInDB.setLocation(L);
         repo.saveAndFlush(boulderInDB);
     }
 
-    @PutMapping("/boulder/update/date/{I}/{C}")
+    @PutMapping("/boulder/update/climber/{I}/{C}")
     public void updateBoulderCLimber(@PathVariable long I, @PathVariable String C){
         Boulder boulderInDB = repo.findByIndex(I);
         boulderInDB.setClimber(C);
         repo.saveAndFlush(boulderInDB);
+    }
+
+    @DeleteMapping("/boulder/delete/{I}")
+    public void deleteBoulder(@PathVariable long I){
+        repo.delete(repo.findByIndex(I));
     }
 
 }

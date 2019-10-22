@@ -101,6 +101,11 @@ public class SpeedController {
         repo.saveAndFlush(speedInDB);
     }
 
+    @DeleteMapping("/speed/delete/{I}")
+    public void deleteSpeed(@PathVariable long I){
+        repo.delete(repo.findByIndex(I));
+    }
+
 
 
 }

@@ -155,4 +155,9 @@ public class TopRopeController {
         repo.saveAndFlush(topRopeInDB);
     }
 
+    @DeleteMapping("/topRope/delete/{I}")
+    public void deleteTopRope(@PathVariable long I){
+        repo.delete(repo.findByIndex(I));
+    }
+
 }
