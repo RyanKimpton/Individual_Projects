@@ -9,15 +9,15 @@ import javax.persistence.Id;
 public class Boulder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long index;
+    private long id;
     private String grade;
-    private String date;
+    private String dateNum;
     private String location;
     private String climber;
 
     public Boulder(String G, String D, String L, String C){
         grade = G;
-        date = D;
+        dateNum = D;
         location = L;
         climber = C;
     }
@@ -32,12 +32,12 @@ public class Boulder {
         this.grade = grade;
     }
 
-    public String getDate() {
-        return date;
+    public String getDateNum() {
+        return dateNum;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDateNum(String dateNum) {
+        this.dateNum = dateNum;
     }
 
     public String getLocation() {

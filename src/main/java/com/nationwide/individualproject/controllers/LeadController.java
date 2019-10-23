@@ -91,11 +91,11 @@ public class LeadController {
 
     @GetMapping("/lead/findBy/date/{D}")
     public ArrayList<Lead> findByDate(@PathVariable String D){
-        return repo.findByDate(D);
+        return repo.findByDateNum(D);
     }
 
     @GetMapping("/lead/findBy/location/{L}")
-    public ArrayList<Lead> findByLoaction(@PathVariable String L){
+    public ArrayList<Lead> findByLocation(@PathVariable String L){
         return repo.findByLocation(L);
     }
 
@@ -111,54 +111,54 @@ public class LeadController {
 
     @GetMapping("/lead/findBy/index/{I}")
     public Lead findByIndex(@PathVariable long I){
-        return repo.findByIndex(I);
+        return repo.findById(I);
     }
 
     @PutMapping("/lead/update/date/{I}/{D}")
     public void updateLeadDate(@PathVariable long I, @PathVariable String D){
-        Lead leadInDB = repo.findByIndex(I);
-        leadInDB.setDate(D);
+        Lead leadInDB = repo.findById(I);
+        leadInDB.setDateNum(D);
         repo.saveAndFlush(leadInDB);
     }
 
     @PutMapping("/lead/update/grade/{I}/{G}")
     public void updateLeadGrade(@PathVariable long I, @PathVariable String G){
-        Lead leadInDB = repo.findByIndex(I);
+        Lead leadInDB = repo.findById(I);
         leadInDB.setGrade(G);
         repo.saveAndFlush(leadInDB);
     }
 
     @PutMapping("/lead/update/height/{I}/{H}")
     public void updateLeadHeight(@PathVariable long I, @PathVariable int H){
-        Lead leadInDB = repo.findByIndex(I);
+        Lead leadInDB = repo.findById(I);
         leadInDB.setHeight(H);
         repo.saveAndFlush(leadInDB);
     }
 
     @PutMapping("/lead/update/location/{I}/{L}")
     public void updateLeadLocation(@PathVariable long I, @PathVariable String L){
-        Lead leadInDB = repo.findByIndex(I);
+        Lead leadInDB = repo.findById(I);
         leadInDB.setLocation(L);
         repo.saveAndFlush(leadInDB);
     }
 
     @PutMapping("/lead/update/climber/{I}/{C}")
     public void updateLeadClimber(@PathVariable long I, @PathVariable String C){
-        Lead leadInDB = repo.findByIndex(I);
+        Lead leadInDB = repo.findById(I);
         leadInDB.setClimber(C);
         repo.saveAndFlush(leadInDB);
     }
 
     @PutMapping("/lead/update/partner/{I}/{P}")
     public void updateLeadPartner(@PathVariable long I, @PathVariable String P){
-        Lead leadInDB = repo.findByIndex(I);
+        Lead leadInDB = repo.findById(I);
         leadInDB.setPartner(P);
         repo.saveAndFlush(leadInDB);
     }
 
     @DeleteMapping("/lead/delete/{I}")
     public void deleteLead(@PathVariable long I){
-        repo.delete(repo.findByIndex(I));
+        repo.delete(repo.findById(I));
     }
 
 

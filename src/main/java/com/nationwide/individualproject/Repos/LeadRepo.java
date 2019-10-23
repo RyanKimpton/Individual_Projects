@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 @Repository
 public interface LeadRepo extends JpaRepository<Lead, Integer> {
-    Lead findByIndex(long I);
+    Lead findById(long I);
     ArrayList<Lead> findAll();
     ArrayList<Lead> findByGrade(String G);
     ArrayList<Lead> findByGradeGreaterThan(String G);
@@ -22,7 +22,7 @@ public interface LeadRepo extends JpaRepository<Lead, Integer> {
     ArrayList<Lead> findByHeightLessThan(int H);
     ArrayList<Lead> findByHeightLessThanEqual(int H);
     ArrayList<Lead> findByHeightBetween(int H1, int H2);
-    ArrayList<Lead> findByDate(String D);
+    ArrayList<Lead> findByDateNum(String D);
     ArrayList<Lead> findByLocation(String L);
     ArrayList<Lead> findByClimber(String C);
     ArrayList<Lead> findByPartner(String P);

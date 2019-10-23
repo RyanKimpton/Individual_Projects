@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.ArrayList;
 
 public interface SpeedRepo extends JpaRepository<Speed, Integer> {
-    Speed findByIndex(long I);
+    Speed findById(long I);
     ArrayList<Speed> findAll();
     ArrayList<Speed> findByTime(float T);
     ArrayList<Speed> findByTimeGreaterThan(float T);

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 @Repository
 public interface TopRopeRepo extends JpaRepository<TopRope, Integer> {
-    TopRope findByIndex(long I);
+    TopRope findById(long I);
     ArrayList<TopRope> findAll();
     ArrayList<TopRope> findByGrade(String G);
     ArrayList<TopRope> findByGradeGreaterThan(String G);
@@ -22,7 +22,7 @@ public interface TopRopeRepo extends JpaRepository<TopRope, Integer> {
     ArrayList<TopRope> findByHeightLessThan(int H);
     ArrayList<TopRope> findByHeightLessThanEqual(int H);
     ArrayList<TopRope> findByHeightBetween(int H1, int H2);
-    ArrayList<TopRope> findByDate(String D);
+    ArrayList<TopRope> findByDateNum(String D);
     ArrayList<TopRope> findByLocation(String L);
     ArrayList<TopRope> findByClimber(String C);
     ArrayList<TopRope> findByPartner(String P);

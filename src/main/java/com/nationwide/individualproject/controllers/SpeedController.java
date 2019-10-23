@@ -70,40 +70,40 @@ public class SpeedController {
 
     @GetMapping("/speed/findBy/index/{I}")
     public Speed findByIndex(@PathVariable long I){
-        return repo.findByIndex(I);
+        return repo.findById(I);
     }
 
     @PutMapping("/speed/update/date/{I}/{D}")
     public void updateSpeedDate(@PathVariable long I, @PathVariable String D){
-        Speed speedInDB = repo.findByIndex(I);
-        speedInDB.setDate(D);
+        Speed speedInDB = repo.findById(I);
+        speedInDB.setDateNum(D);
         repo.saveAndFlush(speedInDB);
     }
 
     @PutMapping("/speed/update/time/{I}/{T}")
     public void updateSpeedTime(@PathVariable long I, @PathVariable float T){
-        Speed speedInDB = repo.findByIndex(I);
+        Speed speedInDB = repo.findById(I);
         speedInDB.setTime(T);
         repo.saveAndFlush(speedInDB);
     }
 
     @PutMapping("/speed/update/location/{I}/{L}")
     public void updateSpeedLocation(@PathVariable long I, @PathVariable String L){
-        Speed speedInDB = repo.findByIndex(I);
+        Speed speedInDB = repo.findById(I);
         speedInDB.setLocation(L);
         repo.saveAndFlush(speedInDB);
     }
 
     @PutMapping("/speed/update/climber/{I}/{C}")
     public void updateSpeedClimber(@PathVariable long I, @PathVariable String C){
-        Speed speedInDB = repo.findByIndex(I);
+        Speed speedInDB = repo.findById(I);
         speedInDB.setClimber(C);
         repo.saveAndFlush(speedInDB);
     }
 
     @DeleteMapping("/speed/delete/{I}")
     public void deleteSpeed(@PathVariable long I){
-        repo.delete(repo.findByIndex(I));
+        repo.delete(repo.findById(I));
     }
 
 

@@ -1,18 +1,16 @@
 package com.nationwide.individualproject.data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name="`lead`")
 public class Lead {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long index;
+    private long id;
     private String grade;
     private int height;
-    private String date;
+    private String dateNum;
     private String location;
     private String climber;
     private String partner;
@@ -20,7 +18,7 @@ public class Lead {
     public Lead(String G, int H, String D, String L, String C, String P){
         grade = G;
         height = H;
-        date = D;
+        dateNum = D;
         location = L;
         climber = C;
         partner = P;
@@ -37,12 +35,12 @@ public class Lead {
         this.grade = grade;
     }
 
-    public String getDate() {
-        return date;
+    public String getDateNum() {
+        return dateNum;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDateNum(String dateNum) {
+        this.dateNum = dateNum;
     }
 
     public String getLocation() {

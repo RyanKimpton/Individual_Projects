@@ -9,10 +9,10 @@ import javax.persistence.Id;
 public class TopRope {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long index;
+    private long id;
     private String grade;
     private int height;
-    private String date;
+    private String dateNum;
     private String location;
     private String climber;
     private String partner;
@@ -20,7 +20,7 @@ public class TopRope {
     public TopRope(String G, int H, String D, String L, String C, String P){
         grade = G;
         height = H;
-        date = D;
+        dateNum = D;
         location = L;
         climber = C;
         partner = P;
@@ -37,12 +37,12 @@ public class TopRope {
         this.grade = grade;
     }
 
-    public String getDate() {
-        return date;
+    public String getDateNum() {
+        return dateNum;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDateNum(String dateNum) {
+        this.dateNum = dateNum;
     }
 
     public String getLocation() {

@@ -31,7 +31,7 @@ public class BoulderController {
 
     @GetMapping("/boulder/findBy/index/{I}")
     public Boulder findByIndex(@PathVariable long I){
-        return repo.findByIndex(I);
+        return repo.findById(I);
     }
 
     @GetMapping("/boulder/findBy/grade/{G}")
@@ -71,7 +71,7 @@ public class BoulderController {
 
     @GetMapping("/boulder/findBy/Date/{D}")
     public ArrayList<Boulder> findByDate(@PathVariable String D){
-        return repo.findByDate(D);
+        return repo.findByDateNum(D);
     }
 
     @GetMapping("/boulder/findBy/location/{L}")
@@ -81,35 +81,35 @@ public class BoulderController {
 
     @PutMapping("/boulder/update/grade/{I}/{G}")
     public void updateBoulderGrade(@PathVariable long I, @PathVariable String G){
-        Boulder boulderInDB = repo.findByIndex(I);
+        Boulder boulderInDB = repo.findById(I);
         boulderInDB.setGrade(G);
         repo.saveAndFlush(boulderInDB);
     }
 
     @PutMapping("/boulder/update/date/{I}/{D}")
     public void updateBoulderDate(@PathVariable long I, @PathVariable String D){
-        Boulder boulderInDB = repo.findByIndex(I);
-        boulderInDB.setDate(D);
+        Boulder boulderInDB = repo.findById(I);
+        boulderInDB.setDateNum(D);
         repo.saveAndFlush(boulderInDB);
     }
 
     @PutMapping("/boulder/update/location/{I}/{L}")
     public void updateBoulderLocation(@PathVariable long I, @PathVariable String L){
-        Boulder boulderInDB = repo.findByIndex(I);
+        Boulder boulderInDB = repo.findById(I);
         boulderInDB.setLocation(L);
         repo.saveAndFlush(boulderInDB);
     }
 
     @PutMapping("/boulder/update/climber/{I}/{C}")
     public void updateBoulderCLimber(@PathVariable long I, @PathVariable String C){
-        Boulder boulderInDB = repo.findByIndex(I);
+        Boulder boulderInDB = repo.findById(I);
         boulderInDB.setClimber(C);
         repo.saveAndFlush(boulderInDB);
     }
 
     @DeleteMapping("/boulder/delete/{I}")
     public void deleteBoulder(@PathVariable long I){
-        repo.delete(repo.findByIndex(I));
+        repo.delete(repo.findById(I));
     }
 
 }

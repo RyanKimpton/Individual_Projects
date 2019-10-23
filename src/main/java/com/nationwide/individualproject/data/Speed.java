@@ -9,15 +9,15 @@ import javax.persistence.Id;
 public class Speed {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long index;
+    private long id;
     private float time;
-    private String date;
+    private String dateNum;
     private String location;
     private String climber;
 
     public Speed(float T, String D, String L, String C){
         time = T;
-        date = D;
+        dateNum = D;
         location = L;
         climber = C;
     }
@@ -32,12 +32,12 @@ public class Speed {
         this.time = time;
     }
 
-    public String getDate() {
-        return date;
+    public String getDateNum() {
+        return dateNum;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDateNum(String dateNum) {
+        this.dateNum = dateNum;
     }
 
     public String getLocation() {

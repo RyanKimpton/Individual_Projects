@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 @Repository
 public interface BoulderRepo extends JpaRepository<Boulder, Integer> {
-    Boulder findByIndex(long I);
+    Boulder findById(long I);
     ArrayList<Boulder> findAll();
     ArrayList<Boulder> findByGrade(String G);
     ArrayList<Boulder> findByGradeGreaterThan(String G);
@@ -18,6 +18,6 @@ public interface BoulderRepo extends JpaRepository<Boulder, Integer> {
     ArrayList<Boulder> findByGradeLessThanEqual(String G);
     ArrayList<Boulder> findByGradeBetween(String G1, String G2);
     ArrayList<Boulder> findByClimber(String N);
-    ArrayList<Boulder> findByDate(String D);
+    ArrayList<Boulder> findByDateNum(String D);
     ArrayList<Boulder> findByLocationContainingIgnoreCase(String G);
 }

@@ -90,11 +90,11 @@ public class TopRopeController {
 
     @GetMapping("/topRope/findBy/date/{D}")
     public ArrayList<TopRope> findByDate(@PathVariable String D){
-        return repo.findByDate(D);
+        return repo.findByDateNum(D);
     }
 
     @GetMapping("/topRope/findBy/location/{L}")
-    public ArrayList<TopRope> findByLoaction(@PathVariable String L){
+    public ArrayList<TopRope> findByLocation(@PathVariable String L){
         return repo.findByLocation(L);
     }
 
@@ -110,56 +110,54 @@ public class TopRopeController {
 
     @GetMapping("/topRope/findBy/index/{I}")
     public TopRope findByIndex(@PathVariable long I){
-        return repo.findByIndex(I);
+        return repo.findById(I);
     }
 
     @PutMapping("/topRope/update/date/{I}/{D}")
     public void updateTopRopeDate(@PathVariable long I, @PathVariable String D){
-        TopRope topRopeInDB = repo.findByIndex(I);
-        topRopeInDB.setDate(D);
+        TopRope topRopeInDB = repo.findById(I);
+        topRopeInDB.setDateNum(D);
         repo.saveAndFlush(topRopeInDB);
     }
 
     @PutMapping("/topRope/update/grade/{I}/{G}")
     public void updateTopRopeGrade(@PathVariable long I, @PathVariable String G){
-        TopRope topRopeInDB = repo.findByIndex(I);
+        TopRope topRopeInDB = repo.findById(I);
         topRopeInDB.setGrade(G);
         repo.saveAndFlush(topRopeInDB);
     }
 
     @PutMapping("/topRope/update/height/{I}/{H}")
     public void updateTopRopeHeight(@PathVariable long I, @PathVariable int H){
-        TopRope topRopeInDB = repo.findByIndex(I);
+        TopRope topRopeInDB = repo.findById(I);
         topRopeInDB.setHeight(H);
         repo.saveAndFlush(topRopeInDB);
     }
 
     @PutMapping("/topRope/update/location/{I}/{L}")
     public void updateTopRopeLocation(@PathVariable long I, @PathVariable String L){
-        TopRope topRopeInDB = repo.findByIndex(I);
+        TopRope topRopeInDB = repo.findById(I);
         topRopeInDB.setLocation(L);
         repo.saveAndFlush(topRopeInDB);
     }
 
     @PutMapping("/topRope/update/climber/{I}/{C}")
     public void updateTopRopeClimber(@PathVariable long I, @PathVariable String C){
-        TopRope topRopeInDB = repo.findByIndex(I);
+        TopRope topRopeInDB = repo.findById(I);
         topRopeInDB.setClimber(C);
         repo.saveAndFlush(topRopeInDB);
     }
 
     @PutMapping("/topRope/update/partner/{I}/{P}")
     public void updateTopRopePartner(@PathVariable long I, @PathVariable String P){
-        TopRope topRopeInDB = repo.findByIndex(I);
+        TopRope topRopeInDB = repo.findById(I);
         topRopeInDB.setPartner(P);
         repo.saveAndFlush(topRopeInDB);
     }
 
     @DeleteMapping("/topRope/delete/{I}")
     public void deleteTopRope(@PathVariable long I){
-        repo.delete(repo.findByIndex(I));
+        repo.delete(repo.findById(I));
     }
 
-
-    ///comment
 }
