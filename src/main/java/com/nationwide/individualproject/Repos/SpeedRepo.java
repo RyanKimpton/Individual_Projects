@@ -14,6 +14,7 @@ public interface SpeedRepo extends JpaRepository<Speed, Integer> {
     ArrayList<Speed> findByTimeLessThan(float T);
     ArrayList<Speed> findByTimeLessThanEqual(float T);
     ArrayList<Speed> findByTimeBetween(float T1, float T2);
+    ArrayList<Speed> findByDate(String D);
     ArrayList<Speed> findByLocation(String L);
     ArrayList<Speed> findByClimber(String C);
 }

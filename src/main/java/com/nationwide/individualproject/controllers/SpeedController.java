@@ -58,6 +58,11 @@ public class SpeedController {
         return repo.findByTimeBetween(T1, T2);
     }
 
+    @GetMapping("/speed/findBy/date/{D}")
+    public ArrayList<Speed> findByDate(@PathVariable String D){
+        return repo.findByDate(D);
+    }
+
     @GetMapping("/speed/findBy/Loaction/{L}")
     public ArrayList<Speed> findByLoaction(@PathVariable String L){
         return repo.findByLocation(L);

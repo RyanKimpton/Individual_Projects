@@ -14,6 +14,44 @@
 	<input type="button" onclick="location.href='Records.html'" value="Records"/>
 	<input type="button" onclick="location.href='Statistics.html'" value="Statistics"/>
 	</div>
+	
+	<script>
+		function checkValues(){
+			var grade = document.getElementById("grade");
+			var dateNum = document.getElementById("dateNum");
+			var location = document.getElementById("location");
+			var climber = document.getElementById("climber");
+			
+			if(grade.value == ""){
+				alert("Please enter a grade for your climb");
+				return false;
+			} 
+			
+			if(dateNum.value == ""){
+				alert("Please enter a date for your climb");
+				return false;
+			}
+			
+			if(location.value == ""){
+				alert("Please enter a location for your climb");
+				return false;
+			} 
+			
+			if(climber.value == ""){
+				alert("Please enter the name of the climber");
+				return false;
+			} 
+		}
+	</script>
+	
+	<form action = "proccess.html" method = "Post" onSubmit = "return checkValues()">
+	grade:<input type = "Text" id = "grade" name = "grade"> 
+	dateNum:<input type = "Text" id = "dateNum" name = "dateNum">
+	location:<input type = "Text" id = "location" name = "location"> 
+	climber:<input type = "Text" id = "climber" name = "climber"> 	
+	<input type = submit>
+	</form>
+
 
 </body>
 
