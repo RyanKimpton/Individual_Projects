@@ -24,11 +24,13 @@ public class BoulderController {
         return bould;
     }
 
+    @CrossOrigin
     @GetMapping("/boulder/showAll")
     public ArrayList<Boulder> showAll(){
         return repo.findAll();
     }
 
+    @CrossOrigin
     @GetMapping("/boulder/findBy/index/{I}")
     public Boulder findByIndex(@PathVariable long I){
         return repo.findById(I);

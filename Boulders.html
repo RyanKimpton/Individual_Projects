@@ -14,6 +14,15 @@
 	<input type="button" onclick="location.href='Records.html'" value="Records"/>
 	<input type="button" onclick="location.href='Statistics.html'" value="Statistics"/>
 	</div>
+
+	<table style = "width: 50%" id="BoulderTable">
+		<tr>
+			<th> Grade </th>
+			<th> Date </th>
+			<th> Location </th>
+			<th> Climber </th>
+		</tr>
+	</table>
 	
 	<script>
 		function checkValues(){
@@ -42,18 +51,331 @@
 				return false;
 			} 
 		}
-	</script>
-	
-	<form action = "proccess.html" method = "Post" onSubmit = "return checkValues()">
-	grade:<input type = "Text" id = "grade" name = "grade"> 
-	dateNum:<input type = "Text" id = "dateNum" name = "dateNum">
-	location:<input type = "Text" id = "location" name = "location"> 
-	climber:<input type = "Text" id = "climber" name = "climber"> 	
-	<input type = submit>
-	</form>
 
+
+	function showAll(){
+		const Http = new XMLHttpRequest();
+		const url = 'http://localhost:9001/boulder/showAll';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(e){
+			if (Http.readyState==4){
+				data=JSON.parse(Http.responseText);
+				data.forEach(function(item){
+					var grade = document.createElement("span");
+					var dateNum = document.createElement("span");
+					var location = document.createElement("span");
+					var climber = document.createElement("span");
+
+					var table = document.getElementById("BoulderTable");
+					var newRow = document.createElement("tr");
+					var tGrade = newRow.appendChild(document.createElement('td'))
+					var tDateNum = newRow.appendChild(document.createElement('td'))
+					var tLocation = newRow.appendChild(document.createElement('td'))
+					var tClimber = newRow.appendChild(document.createElement('td'))
+
+
+					tGrade.innerHTML = item.grade;
+					tDateNum.innerHTML = item.dateNum;
+					tLocation.innerHTML = item.location;
+					tClimber.innerHTML = item.climber;
+
+					table.appendChild(newRow);	
+				});
+			}
+		}
+	Http.send();
+	}
+
+
+
+	function findByIndex(){
+		const Http = new XMLHttpRequest();
+		const url = 'http://localhost:9001/boulder/findBy/index/1';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(e){
+			if (Http.readyState==4){
+				data=JSON.parse(Http.responseText);
+				var grade = document.createElement("span");
+				var dateNum = document.createElement("span");
+				var location = document.createElement("span");
+				var climber = document.createElement("span");
+				grade.innerHTML = data.grade;
+				dateNum.innerHTML = data.dateNum;
+				location.innerHTML = data.location;
+				climber.innerHTML = data.climber;
+				document.body.appendChild(grade);
+				document.body.appendChild(dateNum);
+				document.body.appendChild(location);
+				document.body.appendChild(climber);		
+			}
+		}
+	Http.send();
+	}
+
+
+	function findByGrade(){
+		const Http = new XMLHttpRequest();
+		const url = 'http://localhost:9001';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(e){
+			if (Http.readyState==4){
+				data=JSON.parse(Http.responseText);
+				data.forEach(function(item){
+					var grade = document.createElement("span");
+					var dateNum = document.createElement("span");
+					var location = document.createElement("span");
+					var climber = document.createElement("span");
+					grade.innerHTML = item.grade;
+					dateNum.innerHTML = item.dateNum;
+					location.innerHTML = item.location;
+					climber.innerHTML = item.climber;
+					document.body.appendChild(grade);
+					document.body.appendChild(dateNum);
+					document.body.appendChild(location);
+					document.body.appendChild(climber);		
+				});
+			}
+		}
+	Http.send();
+	}
+
+
+	function findByGradeGreaterThan(){
+		const Http = new XMLHttpRequest();
+		const url = 'http://localhost:9001';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(e){
+			if (Http.readyState==4){
+				data=JSON.parse(Http.responseText);
+				data.forEach(function(item){
+					var grade = document.createElement("span");
+					var dateNum = document.createElement("span");
+					var location = document.createElement("span");
+					var climber = document.createElement("span");
+					grade.innerHTML = item.grade;
+					dateNum.innerHTML = item.dateNum;
+					location.innerHTML = item.location;
+					climber.innerHTML = item.climber;
+					document.body.appendChild(grade);
+					document.body.appendChild(dateNum);
+					document.body.appendChild(location);
+					document.body.appendChild(climber);		
+				});
+			}
+		}
+	Http.send();
+	}
+	
+
+	function findByGradeGreaterThanEqual(){
+		const Http = new XMLHttpRequest();
+		const url = 'http://localhost:9001';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(e){
+			if (Http.readyState==4){
+				data=JSON.parse(Http.responseText);
+				data.forEach(function(item){
+					var grade = document.createElement("span");
+					var dateNum = document.createElement("span");
+					var location = document.createElement("span");
+					var climber = document.createElement("span");
+					grade.innerHTML = item.grade;
+					dateNum.innerHTML = item.dateNum;
+					location.innerHTML = item.location;
+					climber.innerHTML = item.climber;
+					document.body.appendChild(grade);
+					document.body.appendChild(dateNum);
+					document.body.appendChild(location);
+					document.body.appendChild(climber);		
+				});
+			}
+		}
+	Http.send();
+	}
+
+
+	function findByGradeLessThan(){
+		const Http = new XMLHttpRequest();
+		const url = 'http://localhost:9001';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(e){
+			if (Http.readyState==4){
+				data=JSON.parse(Http.responseText);
+				data.forEach(function(item){
+					var grade = document.createElement("span");
+					var dateNum = document.createElement("span");
+					var location = document.createElement("span");
+					var climber = document.createElement("span");
+					grade.innerHTML = item.grade;
+					dateNum.innerHTML = item.dateNum;
+					location.innerHTML = item.location;
+					climber.innerHTML = item.climber;
+					document.body.appendChild(grade);
+					document.body.appendChild(dateNum);
+					document.body.appendChild(location);
+					document.body.appendChild(climber);		
+				});
+			}
+		}
+	Http.send();
+	}
+
+	function findByGradeLessThanEqual(){
+		const Http = new XMLHttpRequest();
+		const url = 'http://localhost:9001';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(e){
+			if (Http.readyState==4){
+				data=JSON.parse(Http.responseText);
+				data.forEach(function(item){
+					var grade = document.createElement("span");
+					var dateNum = document.createElement("span");
+					var location = document.createElement("span");
+					var climber = document.createElement("span");
+					grade.innerHTML = item.grade;
+					dateNum.innerHTML = item.dateNum;
+					location.innerHTML = item.location;
+					climber.innerHTML = item.climber;
+					document.body.appendChild(grade);
+					document.body.appendChild(dateNum);
+					document.body.appendChild(location);
+					document.body.appendChild(climber);		
+				});
+			}
+		}
+	Http.send();
+	}
+
+	function findByGradeBetween(){
+		const Http = new XMLHttpRequest();
+		const url = 'http://localhost:9001';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(e){
+			if (Http.readyState==4){
+				data=JSON.parse(Http.responseText);
+				data.forEach(function(item){
+					var grade = document.createElement("span");
+					var dateNum = document.createElement("span");
+					var location = document.createElement("span");
+					var climber = document.createElement("span");
+					grade.innerHTML = item.grade;
+					dateNum.innerHTML = item.dateNum;
+					location.innerHTML = item.location;
+					climber.innerHTML = item.climber;
+					document.body.appendChild(grade);
+					document.body.appendChild(dateNum);
+					document.body.appendChild(location);
+					document.body.appendChild(climber);		
+				});
+			}
+		}
+	Http.send();
+	}
+
+	function findByClimber(){
+		const Http = new XMLHttpRequest();
+		const url = 'http://localhost:9001';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(e){
+			if (Http.readyState==4){
+				data=JSON.parse(Http.responseText);
+				data.forEach(function(item){
+					var grade = document.createElement("span");
+					var dateNum = document.createElement("span");
+					var location = document.createElement("span");
+					var climber = document.createElement("span");
+					grade.innerHTML = item.grade;
+					dateNum.innerHTML = item.dateNum;
+					location.innerHTML = item.location;
+					climber.innerHTML = item.climber;
+					document.body.appendChild(grade);
+					document.body.appendChild(dateNum);
+					document.body.appendChild(location);
+					document.body.appendChild(climber);		
+				});
+			}
+		}
+	Http.send();
+	}
+
+	function findByDateNum(){
+		const Http = new XMLHttpRequest();
+		const url = 'http://localhost:9001';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(e){
+			if (Http.readyState==4){
+				data=JSON.parse(Http.responseText);
+				data.forEach(function(item){
+					var grade = document.createElement("span");
+					var dateNum = document.createElement("span");
+					var location = document.createElement("span");
+					var climber = document.createElement("span");
+					grade.innerHTML = item.grade;
+					dateNum.innerHTML = item.dateNum;
+					location.innerHTML = item.location;
+					climber.innerHTML = item.climber;
+					document.body.appendChild(grade);
+					document.body.appendChild(dateNum);
+					document.body.appendChild(location);
+					document.body.appendChild(climber);		
+				});
+			}
+		}
+	Http.send();
+	}
+
+	function findByLocation(){
+		const Http = new XMLHttpRequest();
+		const url = 'http://localhost:9001';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(e){
+			if (Http.readyState==4){
+				data=JSON.parse(Http.responseText);
+				data.forEach(function(item){
+					var grade = document.createElement("span");
+					var dateNum = document.createElement("span");
+					var location = document.createElement("span");
+					var climber = document.createElement("span");
+					grade.innerHTML = item.grade;
+					dateNum.innerHTML = item.dateNum;
+					location.innerHTML = item.location;
+					climber.innerHTML = item.climber;
+					document.body.appendChild(grade);
+					document.body.appendChild(dateNum);
+					document.body.appendChild(location);
+					document.body.appendChild(climber);		
+				});
+			}
+		}
+	Http.send();
+	}
+	
+
+
+	</script>
+	<input type = "button" value = "Show all" onclick = "showAll()">
+	<input type = "button" value = "find by index" onclick = "findByIndex()">
+	<input type = "button" value = "Find By Grade" onclick = "findByGrade()">
+	<input type = "button" value = "Find By Grade Greater Than" onclick = "findByGradeGreaterThan()">
+	<input type = "button" value = "Find By Grade Greater Than Equal To" onclick = "findByGradeGreaterThanEqual()">
+	<input type = "button" value = "Find By Grade Less Than" onclick = "findByGradeLessThan()">
+	<input type = "button" value = "Find By Grade Less Than Equal To" onclick = "findByGradeLessThanEqual()">
+	<input type = "button" value = "Find By Grade Between" onclick = "findByGradeBetween()">
+	<input type = "button" value = "find By Climber" onclick = "findByClimber()">
+	<input type = "button" value = "Find By Date" onclick = "findByDateNum()">
+	<input type = "button" value = "Find By Location" onclick = "findByLocation()">
 
 </body>
 
 
 </html>
+
+
+
+<!-- // <form action = "http://localhost:9001/boulder" th:action="@{/boulder/add}" th:object="${grade}/${dateNum}/${location}/${climber}"  method = "Post" onSubmit = "return checkValues()">
+// 	grade:<input type = "Text" id = "grade" name = "grade"> 
+// 	dateNum:<input type = "Text" id = "dateNum" name = "dateNum">
+// 	location:<input type = "Text" id = "location" name = "location"> 
+// 	climber:<input type = "Text" id = "climber" name = "climber"> 	
+// 	<input type = submit>
+// 	</form>  -->

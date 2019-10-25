@@ -59,8 +59,8 @@ public class SpeedController {
     }
 
     @GetMapping("/speed/findBy/date/{D}")
-    public ArrayList<Speed> findByDate(@PathVariable String D){
-        return repo.findByDate(D);
+    public ArrayList<Speed> findByDateNum(@PathVariable String D){
+        return repo.findByDateNum(D);
     }
 
     @GetMapping("/speed/findBy/Loaction/{L}")
