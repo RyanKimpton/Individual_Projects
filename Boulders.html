@@ -1,10 +1,13 @@
-<html>
+
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:spring="http://java.sun.com/xml/ns/javaee">
+	<link rel="stylesheet" href="Styling.css">
+
 
 <head>
 	<title> Boulders </title>
-<head>
+</head>
 
-<body>
+<body onload = "showAll()">
 	<div>
 	<input type="button" onclick="location.href='FrontEnd.html'" value="All Climbs"/>
 	<input type="button" onclick="location.href='Boulders.html'" value="Boulders"/>
@@ -14,39 +17,57 @@
 	<input type="button" onclick="location.href='Records.html'" value="Records"/>
 	<input type="button" onclick="location.href='Statistics.html'" value="Statistics"/>
 	</div>
-
-	<table style = "width: 50%" id="BoulderTable">
+	
+	<table class = "tableFixHead" id="BoulderTable" style = "width:50%">
 		<tr>
-			<th> Grade </th>
-			<th> Date </th>
-			<th> Location </th>
-			<th> Climber </th>
+			<td><label> id </label></td>
+			<td><label> Grade </label></td>
+<!--			<td> <input type = "Text" th:field="*{grade}"/></td>-->
+			<td><label> Date </label></td>
+<!--			<td> <input type = "Text" th:field="*{date}"/></td>-->
+			<td><label>Location </label></td>
+<!--			<td> <input type = "text" th:field="*{location}"/></td>-->
+			<td><label> Climber </label></td>
+<!--			<td> <input type = "text" th:field="*{location}"/></td>-->
+
+			<spring:url value="/boulder/delete/${}" var="deleteUrl"/>
+			<button class="btn btn-danger" onclick="removeUser('${deleteUrl}')">Delete</button>
+
 		</tr>
 	</table>
+
 	
 	<script>
+		//import * as $ from 'jquery';
+
+		function clearTable(){
+			for( var i = BoulderTable.rows.length - 1; i > 0; i--){
+				BoulderTable.deleteRow(i);
+			}
+		}
+
 		function checkValues(){
 			var grade = document.getElementById("grade");
 			var dateNum = document.getElementById("dateNum");
 			var location = document.getElementById("location");
 			var climber = document.getElementById("climber");
 			
-			if(grade.value == ""){
+			if(grade.value === ""){
 				alert("Please enter a grade for your climb");
 				return false;
 			} 
 			
-			if(dateNum.value == ""){
+			if(dateNum.value === ""){
 				alert("Please enter a date for your climb");
 				return false;
 			}
 			
-			if(location.value == ""){
+			if(location.value === ""){
 				alert("Please enter a location for your climb");
 				return false;
 			} 
 			
-			if(climber.value == ""){
+			if(climber.value === ""){
 				alert("Please enter the name of the climber");
 				return false;
 			} 
@@ -54,85 +75,88 @@
 
 
 	function showAll(){
+		clearTable();
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/boulder/showAll';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("BoulderTable");
+					let newRow = document.createElement("tr");
+					let tid = newRow.appendChild(document.createElement('td'));
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
 
-					var table = document.getElementById("BoulderTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-
-
+					tid.innerHTML = item.id;
 					tGrade.innerHTML = item.grade;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
 
-					table.appendChild(newRow);	
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
 
 
 	function findByIndex(){
+		clearTable();
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/boulder/findBy/index/1';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				var grade = document.createElement("span");
-				var dateNum = document.createElement("span");
-				var location = document.createElement("span");
-				var climber = document.createElement("span");
-				grade.innerHTML = data.grade;
-				dateNum.innerHTML = data.dateNum;
-				location.innerHTML = data.location;
-				climber.innerHTML = data.climber;
-				document.body.appendChild(grade);
-				document.body.appendChild(dateNum);
-				document.body.appendChild(location);
-				document.body.appendChild(climber);		
+			let data;
+			if (Http.readyState === 4 && Http.status ===200) {
+				console.log("this");
+				data = JSON.parse(Http.responseText);
+				var table = document.getElementById("BoulderTable");
+				var newRow = document.createElement("tr");
+				var tGrade = newRow.appendChild(document.createElement('td'))
+				var tDateNum = newRow.appendChild(document.createElement('td'))
+				var tLocation = newRow.appendChild(document.createElement('td'))
+				var tClimber = newRow.appendChild(document.createElement('td'))
+				tGrade.innerHTML = data.grade;
+				tDateNum.innerHTML = data.dateNum;
+				tLocation.innerHTML = data.location;
+				tClimber.innerHTML = data.climber;
+
+				table.appendChild(newRow);
+
 			}
-		}
+		};
 	Http.send();
 	}
 
 
 	function findByGrade(){
+		clearTable();
 		const Http = new XMLHttpRequest();
-		const url = 'http://localhost:9001';
+		const url = 'http://localhost:9001/boulder/findBy/grade/{G}';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(e){
 			if (Http.readyState==4){
 				data=JSON.parse(Http.responseText);
 				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					grade.innerHTML = item.grade;
-					dateNum.innerHTML = item.dateNum;
-					location.innerHTML = item.location;
-					climber.innerHTML = item.climber;
-					document.body.appendChild(grade);
-					document.body.appendChild(dateNum);
-					document.body.appendChild(location);
-					document.body.appendChild(climber);		
+					var table = document.getElementById("BoulderTable");
+					var newRow = document.createElement("tr");
+					var tGrade = newRow.appendChild(document.createElement('td'))
+					var tDateNum = newRow.appendChild(document.createElement('td'))
+					var tLocation = newRow.appendChild(document.createElement('td'))
+					var tClimber = newRow.appendChild(document.createElement('td'))
+					tGrade.innerHTML = data.grade;
+					tDateNum.innerHTML = data.dateNum;
+					tLocation.innerHTML = data.location;
+					tClimber.innerHTML = data.climber;
+
+					table.appendChild(newRow);
 				});
 			}
 		}
@@ -141,25 +165,26 @@
 
 
 	function findByGradeGreaterThan(){
+		clearTable();
 		const Http = new XMLHttpRequest();
-		const url = 'http://localhost:9001';
+		const url = 'http://localhost:9001/boulder/findBy/gradeGreaterThan/{G}';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(e){
 			if (Http.readyState==4){
 				data=JSON.parse(Http.responseText);
 				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					grade.innerHTML = item.grade;
-					dateNum.innerHTML = item.dateNum;
-					location.innerHTML = item.location;
-					climber.innerHTML = item.climber;
-					document.body.appendChild(grade);
-					document.body.appendChild(dateNum);
-					document.body.appendChild(location);
-					document.body.appendChild(climber);		
+					var table = document.getElementById("BoulderTable");
+					var newRow = document.createElement("tr");
+					var tGrade = newRow.appendChild(document.createElement('td'))
+					var tDateNum = newRow.appendChild(document.createElement('td'))
+					var tLocation = newRow.appendChild(document.createElement('td'))
+					var tClimber = newRow.appendChild(document.createElement('td'))
+					tGrade.innerHTML = data.grade;
+					tDateNum.innerHTML = data.dateNum;
+					tLocation.innerHTML = data.location;
+					tClimber.innerHTML = data.climber;
+	
+					table.appendChild(newRow);
 				});
 			}
 		}
@@ -168,25 +193,26 @@
 	
 
 	function findByGradeGreaterThanEqual(){
+		clearTable();
 		const Http = new XMLHttpRequest();
-		const url = 'http://localhost:9001';
+		const url = 'http://localhost:9001/Boulder/findBy/gradeGreaterThanEqual/{G}';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(e){
 			if (Http.readyState==4){
 				data=JSON.parse(Http.responseText);
 				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					grade.innerHTML = item.grade;
-					dateNum.innerHTML = item.dateNum;
-					location.innerHTML = item.location;
-					climber.innerHTML = item.climber;
-					document.body.appendChild(grade);
-					document.body.appendChild(dateNum);
-					document.body.appendChild(location);
-					document.body.appendChild(climber);		
+					var table = document.getElementById("BoulderTable");
+					var newRow = document.createElement("tr");
+					var tGrade = newRow.appendChild(document.createElement('td'))
+					var tDateNum = newRow.appendChild(document.createElement('td'))
+					var tLocation = newRow.appendChild(document.createElement('td'))
+					var tClimber = newRow.appendChild(document.createElement('td'))
+					tGrade.innerHTML = data.grade;
+					tDateNum.innerHTML = data.dateNum;
+					tLocation.innerHTML = data.location;
+					tClimber.innerHTML = data.climber;
+	
+					table.appendChild(newRow);
 				});
 			}
 		}
@@ -195,25 +221,26 @@
 
 
 	function findByGradeLessThan(){
+		clearTable();
 		const Http = new XMLHttpRequest();
-		const url = 'http://localhost:9001';
+		const url = 'http://localhost:9001/boulder/findBy/gradeLessThan/{G}';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(e){
 			if (Http.readyState==4){
 				data=JSON.parse(Http.responseText);
 				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					grade.innerHTML = item.grade;
-					dateNum.innerHTML = item.dateNum;
-					location.innerHTML = item.location;
-					climber.innerHTML = item.climber;
-					document.body.appendChild(grade);
-					document.body.appendChild(dateNum);
-					document.body.appendChild(location);
-					document.body.appendChild(climber);		
+					var table = document.getElementById("BoulderTable");
+					var newRow = document.createElement("tr");
+					var tGrade = newRow.appendChild(document.createElement('td'))
+					var tDateNum = newRow.appendChild(document.createElement('td'))
+					var tLocation = newRow.appendChild(document.createElement('td'))
+					var tClimber = newRow.appendChild(document.createElement('td'))
+					tGrade.innerHTML = data.grade;
+					tDateNum.innerHTML = data.dateNum;
+					tLocation.innerHTML = data.location;
+					tClimber.innerHTML = data.climber;
+	
+					table.appendChild(newRow);
 				});
 			}
 		}
@@ -221,25 +248,26 @@
 	}
 
 	function findByGradeLessThanEqual(){
+		clearTable();
 		const Http = new XMLHttpRequest();
-		const url = 'http://localhost:9001';
+		const url = 'http://localhost:9001/boulder/findBy/gradeLessThanEqual/{G}';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(e){
 			if (Http.readyState==4){
 				data=JSON.parse(Http.responseText);
 				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					grade.innerHTML = item.grade;
-					dateNum.innerHTML = item.dateNum;
-					location.innerHTML = item.location;
-					climber.innerHTML = item.climber;
-					document.body.appendChild(grade);
-					document.body.appendChild(dateNum);
-					document.body.appendChild(location);
-					document.body.appendChild(climber);		
+					var table = document.getElementById("BoulderTable");
+					var newRow = document.createElement("tr");
+					var tGrade = newRow.appendChild(document.createElement('td'))
+					var tDateNum = newRow.appendChild(document.createElement('td'))
+					var tLocation = newRow.appendChild(document.createElement('td'))
+					var tClimber = newRow.appendChild(document.createElement('td'))
+					tGrade.innerHTML = data.grade;
+					tDateNum.innerHTML = data.dateNum;
+					tLocation.innerHTML = data.location;
+					tClimber.innerHTML = data.climber;
+	
+					table.appendChild(newRow);
 				});
 			}
 		}
@@ -247,25 +275,26 @@
 	}
 
 	function findByGradeBetween(){
+		clearTable();
 		const Http = new XMLHttpRequest();
-		const url = 'http://localhost:9001';
+		const url = 'http://localhost:9001/boulder/findBy/gradeBetween/{G1}/{G2}';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(e){
 			if (Http.readyState==4){
 				data=JSON.parse(Http.responseText);
 				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					grade.innerHTML = item.grade;
-					dateNum.innerHTML = item.dateNum;
-					location.innerHTML = item.location;
-					climber.innerHTML = item.climber;
-					document.body.appendChild(grade);
-					document.body.appendChild(dateNum);
-					document.body.appendChild(location);
-					document.body.appendChild(climber);		
+					var table = document.getElementById("BoulderTable");
+					var newRow = document.createElement("tr");
+					var tGrade = newRow.appendChild(document.createElement('td'))
+					var tDateNum = newRow.appendChild(document.createElement('td'))
+					var tLocation = newRow.appendChild(document.createElement('td'))
+					var tClimber = newRow.appendChild(document.createElement('td'))
+					tGrade.innerHTML = data.grade;
+					tDateNum.innerHTML = data.dateNum;
+					tLocation.innerHTML = data.location;
+					tClimber.innerHTML = data.climber;
+	
+					table.appendChild(newRow);
 				});
 			}
 		}
@@ -273,25 +302,26 @@
 	}
 
 	function findByClimber(){
+		clearTable();
 		const Http = new XMLHttpRequest();
-		const url = 'http://localhost:9001';
+		const url = 'http://localhost:9001/boulder/findBy/Climber/{C}';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(e){
 			if (Http.readyState==4){
 				data=JSON.parse(Http.responseText);
 				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					grade.innerHTML = item.grade;
-					dateNum.innerHTML = item.dateNum;
-					location.innerHTML = item.location;
-					climber.innerHTML = item.climber;
-					document.body.appendChild(grade);
-					document.body.appendChild(dateNum);
-					document.body.appendChild(location);
-					document.body.appendChild(climber);		
+					var table = document.getElementById("BoulderTable");
+					var newRow = document.createElement("tr");
+					var tGrade = newRow.appendChild(document.createElement('td'))
+					var tDateNum = newRow.appendChild(document.createElement('td'))
+					var tLocation = newRow.appendChild(document.createElement('td'))
+					var tClimber = newRow.appendChild(document.createElement('td'))
+					tGrade.innerHTML = data.grade;
+					tDateNum.innerHTML = data.dateNum;
+					tLocation.innerHTML = data.location;
+					tClimber.innerHTML = data.climber;
+	
+					table.appendChild(newRow);
 				});
 			}
 		}
@@ -299,25 +329,26 @@
 	}
 
 	function findByDateNum(){
+		clearTable();
 		const Http = new XMLHttpRequest();
-		const url = 'http://localhost:9001';
+		const url = 'http://localhost:9001/boulder/findBy/Date/{D}';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(e){
 			if (Http.readyState==4){
 				data=JSON.parse(Http.responseText);
 				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					grade.innerHTML = item.grade;
-					dateNum.innerHTML = item.dateNum;
-					location.innerHTML = item.location;
-					climber.innerHTML = item.climber;
-					document.body.appendChild(grade);
-					document.body.appendChild(dateNum);
-					document.body.appendChild(location);
-					document.body.appendChild(climber);		
+					var table = document.getElementById("BoulderTable");
+					var newRow = document.createElement("tr");
+					var tGrade = newRow.appendChild(document.createElement('td'))
+					var tDateNum = newRow.appendChild(document.createElement('td'))
+					var tLocation = newRow.appendChild(document.createElement('td'))
+					var tClimber = newRow.appendChild(document.createElement('td'))
+					tGrade.innerHTML = data.grade;
+					tDateNum.innerHTML = data.dateNum;
+					tLocation.innerHTML = data.location;
+					tClimber.innerHTML = data.climber;
+
+					table.appendChild(newRow);
 				});
 			}
 		}
@@ -325,57 +356,94 @@
 	}
 
 	function findByLocation(){
+		clearTable();
 		const Http = new XMLHttpRequest();
-		const url = 'http://localhost:9001';
+		const url = 'http://localhost:9001/boulder/findBy/location/{L}';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(e){
 			if (Http.readyState==4){
 				data=JSON.parse(Http.responseText);
 				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					grade.innerHTML = item.grade;
-					dateNum.innerHTML = item.dateNum;
-					location.innerHTML = item.location;
-					climber.innerHTML = item.climber;
-					document.body.appendChild(grade);
-					document.body.appendChild(dateNum);
-					document.body.appendChild(location);
-					document.body.appendChild(climber);		
+					var table = document.getElementById("BoulderTable");
+					var newRow = document.createElement("tr");
+					var tGrade = newRow.appendChild(document.createElement('td'))
+					var tDateNum = newRow.appendChild(document.createElement('td'))
+					var tLocation = newRow.appendChild(document.createElement('td'))
+					var tClimber = newRow.appendChild(document.createElement('td'))
+					tGrade.innerHTML = data.grade;
+					tDateNum.innerHTML = data.dateNum;
+					tLocation.innerHTML = data.location;
+					tClimber.innerHTML = data.climber;
+
+					table.appendChild(newRow);
 				});
 			}
 		}
 	Http.send();
 	}
-	
+
+
+	function addBoulder(){
+		const url = 'http://localhost:9001/boulder/add';
+		const http = new XMLHttpRequest();
+		http.onload = function(){
+			showAll();
+		};
+		http.open("POST", url, true);
+		http.setRequestHeader("Content-Type", "application/json");
+
+		let gradeF = document.getElementById("grade");
+		let dateF = document.getElementById("dateNum");
+		let locationF = document.getElementById("location");
+		let climberF = document.getElementById("climber");
+		console.log(gradeF.value);
+		console.log(dateF.value);
+		console.log(locationF.value);
+		console.log(climberF.value);
+		let data = JSON.stringify({"id": "", "grade": gradeF.value, "dateNum": dateF.value, "location": locationF.value, "climber": climberF.value});
+		console.log(data);
+		http.send(data);
+		return false;
+	}
+
+	function removeUser(deleteURL) {
+		$.ajax({
+			type: "DELETE",
+			url: "http://localhost:9001/boulder/delete",
+			success: function () {
+				// window.location.reload();
+				$('#BoulderTable').remove();
+			},
+			failure: function (errMsg) {
+				console.log(errMsg.toString())
+			}
+		});
+	}
 
 
 	</script>
 	<input type = "button" value = "Show all" onclick = "showAll()">
-	<input type = "button" value = "find by index" onclick = "findByIndex()">
+	<input type = "button" value = "Find by index" onclick = "findByIndex()">
 	<input type = "button" value = "Find By Grade" onclick = "findByGrade()">
 	<input type = "button" value = "Find By Grade Greater Than" onclick = "findByGradeGreaterThan()">
 	<input type = "button" value = "Find By Grade Greater Than Equal To" onclick = "findByGradeGreaterThanEqual()">
 	<input type = "button" value = "Find By Grade Less Than" onclick = "findByGradeLessThan()">
 	<input type = "button" value = "Find By Grade Less Than Equal To" onclick = "findByGradeLessThanEqual()">
 	<input type = "button" value = "Find By Grade Between" onclick = "findByGradeBetween()">
-	<input type = "button" value = "find By Climber" onclick = "findByClimber()">
+	<input type = "button" value = "Find By Climber" onclick = "findByClimber()">
 	<input type = "button" value = "Find By Date" onclick = "findByDateNum()">
 	<input type = "button" value = "Find By Location" onclick = "findByLocation()">
+
+
+	<form method="post" onsubmit="return addBoulder()">
+		Grade:<input type="text" id="grade" Name="grade">
+		Date:<input type="text" id="dateNum" Name="dateNum">
+		Location:<input type="text" id="location" Name="location">
+		Climber:<input type="text" id="climber" Name="climber">
+		<input type="submit">
+	</form>
 
 </body>
 
 
 </html>
-
-
-
-<!-- // <form action = "http://localhost:9001/boulder" th:action="@{/boulder/add}" th:object="${grade}/${dateNum}/${location}/${climber}"  method = "Post" onSubmit = "return checkValues()">
-// 	grade:<input type = "Text" id = "grade" name = "grade"> 
-// 	dateNum:<input type = "Text" id = "dateNum" name = "dateNum">
-// 	location:<input type = "Text" id = "location" name = "location"> 
-// 	climber:<input type = "Text" id = "climber" name = "climber"> 	
-// 	<input type = submit>
-// 	</form>  -->

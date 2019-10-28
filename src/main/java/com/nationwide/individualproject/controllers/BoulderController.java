@@ -18,9 +18,8 @@ public class BoulderController {
     }
 
     @CrossOrigin
-    @PostMapping("/boulder/add/{G}/{D}/{L}/{C}")
-    public Boulder boulderAdd(@PathVariable String G, @PathVariable String D, @PathVariable String L, @PathVariable String C){
-        Boulder bould = new Boulder(G, D, L, C);
+    @PostMapping("/boulder/add")
+    public Boulder boulderAdd2(@RequestBody Boulder bould){
         repo.saveAndFlush(bould);
         return bould;
     }
