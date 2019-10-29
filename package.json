@@ -1,7 +1,9 @@
 {
   "name": "Individual_Projects",
   "version": "1.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "jquery.js": "0.0.2-security"
+  },
   "devDependencies": {
     "jquery": "^3.4.1"
   }

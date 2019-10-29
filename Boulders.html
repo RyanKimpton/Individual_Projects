@@ -2,6 +2,10 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:spring="http://java.sun.com/xml/ns/javaee">
 	<link rel="stylesheet" href="Styling.css">
 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 
 <head>
 	<title> Boulders </title>
@@ -29,28 +33,27 @@
 <!--			<td> <input type = "text" th:field="*{location}"/></td>-->
 			<td><label> Climber </label></td>
 <!--			<td> <input type = "text" th:field="*{location}"/></td>-->
-
-			<spring:url value="/boulder/delete/${}" var="deleteUrl"/>
-			<button class="btn btn-danger" onclick="removeUser('${deleteUrl}')">Delete</button>
-
+<!--			<td><button type="button" class="deletebtn" title="Remove row"> X </button></td>-->
 		</tr>
 	</table>
 
-	
-	<script>
-		//import * as $ from 'jquery';
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+<!--    <script type="text/javascript" src="js/script.js"></script>-->
+
+	<script type="text/javascript">
 
 		function clearTable(){
-			for( var i = BoulderTable.rows.length - 1; i > 0; i--){
+			for( let i = BoulderTable.rows.length - 1; i > 0; i--){
 				BoulderTable.deleteRow(i);
 			}
 		}
 
 		function checkValues(){
-			var grade = document.getElementById("grade");
-			var dateNum = document.getElementById("dateNum");
-			var location = document.getElementById("location");
-			var climber = document.getElementById("climber");
+			let grade = document.getElementById("grade");
+			let dateNum = document.getElementById("dateNum");
+			let location = document.getElementById("location");
+			let climber = document.getElementById("climber");
 			
 			if(grade.value === ""){
 				alert("Please enter a grade for your climb");
@@ -79,7 +82,7 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/boulder/showAll';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
+		Http.onreadystatechange = function(){
 			let data;
 			if (Http.readyState === 4) {
 				data = JSON.parse(Http.responseText);
@@ -91,6 +94,26 @@
 					let tDateNum = newRow.appendChild(document.createElement('td'));
 					let tLocation = newRow.appendChild(document.createElement('td'));
 					let tClimber = newRow.appendChild(document.createElement('td'));
+
+
+					//Creates the button
+					let deleteButton = document.createElement('span');
+					//Styling
+					deleteButton.className = "glyphicon glyphicon-remove";
+					deleteButton.style.color = "red";
+					//Function to control what happens when you press the button
+					deleteButton.onclick = function(){
+						deleteButton.id= item.id;
+						//Calls a function to handle your delete request
+						deleteBoulder(deleteButton.id);
+					};
+					//Adds a button to each row of the table
+					newRow.appendChild(deleteButton);
+
+
+
+
+
 
 					tid.innerHTML = item.id;
 					tGrade.innerHTML = item.grade;
@@ -112,17 +135,17 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/boulder/findBy/index/1';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
+		Http.onreadystatechange = function(){
 			let data;
 			if (Http.readyState === 4 && Http.status ===200) {
 				console.log("this");
 				data = JSON.parse(Http.responseText);
-				var table = document.getElementById("BoulderTable");
-				var newRow = document.createElement("tr");
-				var tGrade = newRow.appendChild(document.createElement('td'))
-				var tDateNum = newRow.appendChild(document.createElement('td'))
-				var tLocation = newRow.appendChild(document.createElement('td'))
-				var tClimber = newRow.appendChild(document.createElement('td'))
+				let table = document.getElementById("BoulderTable");
+				let newRow = document.createElement("tr");
+				let tGrade = newRow.appendChild(document.createElement('td'));
+				let tDateNum = newRow.appendChild(document.createElement('td'));
+				let tLocation = newRow.appendChild(document.createElement('td'));
+				let tClimber = newRow.appendChild(document.createElement('td'));
 				tGrade.innerHTML = data.grade;
 				tDateNum.innerHTML = data.dateNum;
 				tLocation.innerHTML = data.location;
@@ -141,16 +164,17 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/boulder/findBy/grade/{G}';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var table = document.getElementById("BoulderTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("BoulderTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
 					tGrade.innerHTML = data.grade;
 					tDateNum.innerHTML = data.dateNum;
 					tLocation.innerHTML = data.location;
@@ -159,7 +183,7 @@
 					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -169,25 +193,26 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/boulder/findBy/gradeGreaterThan/{G}';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var table = document.getElementById("BoulderTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("BoulderTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
 					tGrade.innerHTML = data.grade;
 					tDateNum.innerHTML = data.dateNum;
 					tLocation.innerHTML = data.location;
 					tClimber.innerHTML = data.climber;
-	
+
 					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 	
@@ -197,25 +222,26 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/Boulder/findBy/gradeGreaterThanEqual/{G}';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var table = document.getElementById("BoulderTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("BoulderTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
 					tGrade.innerHTML = data.grade;
 					tDateNum.innerHTML = data.dateNum;
 					tLocation.innerHTML = data.location;
 					tClimber.innerHTML = data.climber;
-	
+
 					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -225,25 +251,26 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/boulder/findBy/gradeLessThan/{G}';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var table = document.getElementById("BoulderTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("BoulderTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
 					tGrade.innerHTML = data.grade;
 					tDateNum.innerHTML = data.dateNum;
 					tLocation.innerHTML = data.location;
 					tClimber.innerHTML = data.climber;
-	
+
 					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -252,25 +279,26 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/boulder/findBy/gradeLessThanEqual/{G}';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var table = document.getElementById("BoulderTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("BoulderTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
 					tGrade.innerHTML = data.grade;
 					tDateNum.innerHTML = data.dateNum;
 					tLocation.innerHTML = data.location;
 					tClimber.innerHTML = data.climber;
-	
+
 					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -279,25 +307,26 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/boulder/findBy/gradeBetween/{G1}/{G2}';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var table = document.getElementById("BoulderTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("BoulderTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
 					tGrade.innerHTML = data.grade;
 					tDateNum.innerHTML = data.dateNum;
 					tLocation.innerHTML = data.location;
 					tClimber.innerHTML = data.climber;
-	
+
 					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -306,25 +335,26 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/boulder/findBy/Climber/{C}';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var table = document.getElementById("BoulderTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("BoulderTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
 					tGrade.innerHTML = data.grade;
 					tDateNum.innerHTML = data.dateNum;
 					tLocation.innerHTML = data.location;
 					tClimber.innerHTML = data.climber;
-	
+
 					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -333,16 +363,17 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/boulder/findBy/Date/{D}';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var table = document.getElementById("BoulderTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("BoulderTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
 					tGrade.innerHTML = data.grade;
 					tDateNum.innerHTML = data.dateNum;
 					tLocation.innerHTML = data.location;
@@ -351,7 +382,7 @@
 					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -360,16 +391,17 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/boulder/findBy/location/{L}';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var table = document.getElementById("BoulderTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("BoulderTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
 					tGrade.innerHTML = data.grade;
 					tDateNum.innerHTML = data.dateNum;
 					tLocation.innerHTML = data.location;
@@ -378,7 +410,7 @@
 					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -406,20 +438,25 @@
 		return false;
 	}
 
-	function removeUser(deleteURL) {
-		$.ajax({
-			type: "DELETE",
-			url: "http://localhost:9001/boulder/delete",
-			success: function () {
-				// window.location.reload();
-				$('#BoulderTable').remove();
-			},
-			failure: function (errMsg) {
-				console.log(errMsg.toString())
-			}
-		});
+	function deleteBoulder(url2){
+		const url = 'http://localhost:9001/boulder/delete/' + url2;
+		console.log(url);
 	}
 
+
+	// function removeUser() {
+	// 	$.ajax({
+	// 		type: "DELETE",
+	// 		url: "http://localhost:9001/boulder/delete",
+	// 		success: function () {
+	// 			// window.location.reload();
+	// 			$('#BoulderTable').remove();
+	// 		},
+	// 		failure: function (errMsg) {
+	// 			console.log(errMsg.toString())
+	// 		}
+	// 	});
+	// }
 
 	</script>
 	<input type = "button" value = "Show all" onclick = "showAll()">
@@ -442,6 +479,8 @@
 		Climber:<input type="text" id="climber" Name="climber">
 		<input type="submit">
 	</form>
+
+
 
 </body>
 
