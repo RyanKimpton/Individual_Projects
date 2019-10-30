@@ -71,8 +71,6 @@
 	function showAll(){
 		clearTable();
 
-        newRow.appendChild(deleteButton);
-
         let tableRef = document.getElementById('BoulderTable');
 
         let newRowT   = tableRef.insertRow(tableRef.rows.length);
@@ -138,6 +136,8 @@
 						deleteBoulder(deleteButton.id);
 					};
 					//Adds a button to each row of the table
+
+                    newRow.appendChild(deleteButton);
 
 					let editButton = document.createElement('span');
 					editButton.className = "glyphicon glyphicon-pencil";
