@@ -432,10 +432,11 @@
 	}
 
 	function deleteBoulder(url2){
+		console.log("Start of delete function")
 		const url = 'http://34.89.31.27:9001/boulder/delete/' + url2;
 		const http = new XMLHttpRequest();
 		http.open("DELETE", url, true);
-		console.log(url2);
+		console.log("URL" + url);
 		http.send();
 	}
 
