@@ -439,6 +439,7 @@
 			 "climber": climberF.value
 			}
 		);
+		console.log(data);
 		http.send(data);
 		return false;
 	}
@@ -455,7 +456,8 @@
 		let newCell4 = newRow.insertCell(4);
 		let newCell5 = newRow.insertCell(5);
 
-		let input1 = document.createElement('input'),
+		let input0 = document.createElement('input'),
+			input1 = document.createElement('input'),
 		    input2 = document.createElement('input'),
 		    input3 = document.createElement('input'),
 		    input4 = document.createElement('input'),
@@ -469,6 +471,7 @@
 			addBoulder();
 		};
 
+		newCell0.appendChild(input0);
 		newCell1.appendChild(input1);
 		newCell2.appendChild(input2);
 		newCell3.appendChild(input3);
@@ -509,7 +512,7 @@
 <!--		Location:<input type="text" id="location" Name="location">-->
 <!--		Climber:<input type="text" id="climber" Name="climber">-->
 <!--		<input type="submit">-->
-	</form>
+<!--	</form>-->
 
 
 
