@@ -436,8 +436,10 @@
 		const http = new XMLHttpRequest();
 		http.open("DELETE", url, true);
 		http.send();
-		if(http.readyState === 4){
-			showAll();
+		http.onreadystatechange = function(){
+			if(http.readyState === 4){
+				showAll();
+			}
 		}
 	}
 
