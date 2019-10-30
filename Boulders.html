@@ -118,7 +118,7 @@
 							input2 = document.createElement('input'),
 							input3 = document.createElement('input'),
 							input4 = document.createElement('input'),
-							input5 = document.createElement('submit');
+							input5 = document.createElement('span');
 
 					input1.id="grade";
 					input2.id="dateNum";
@@ -127,6 +127,8 @@
 					input5.onclick = function(){
 						addBoulder();
 					};
+					input5.className = "glyphicon glyphicon-plus";
+					input5.color = "Green";
 
 					newCell0.appendChild(input0);
 					newCell1.appendChild(input1);
