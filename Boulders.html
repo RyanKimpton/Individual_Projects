@@ -1,5 +1,5 @@
 
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:spring="http://java.sun.com/xml/ns/javaee">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:spring="http://java.sun.com/xml/ns/javaee" lang="en">
 	<link rel="stylesheet" href="Styling.css">
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -100,6 +100,14 @@
 					};
 					//Adds a button to each row of the table
 					newRow.appendChild(deleteButton);
+
+					let editButton = document.createElement('span');
+					editButton.className = "glyphicon glyphicon-pencil";
+					editButton.style.color = "yellow";
+					editButton.onclick = function(){
+
+					};
+					newRow.appendChild(editButton);
 
 
 
@@ -421,12 +429,7 @@
 		let dateF = document.getElementById("dateNum");
 		let locationF = document.getElementById("location");
 		let climberF = document.getElementById("climber");
-		console.log(gradeF.value);
-		console.log(dateF.value);
-		console.log(locationF.value);
-		console.log(climberF.value);
 		let data = JSON.stringify({"id": "", "grade": gradeF.value, "dateNum": dateF.value, "location": locationF.value, "climber": climberF.value});
-		console.log(data);
 		http.send(data);
 		return false;
 	}
@@ -442,6 +445,8 @@
 			}
 		}
 	}
+
+
 
 
 	</script>
