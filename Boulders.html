@@ -124,7 +124,7 @@
 	function findByIndex(){
 		clearTable();
 		const Http = new XMLHttpRequest();
-		const url = 'http://34.89.31.27/boulder/findBy/index/1';
+		const url = 'http://34.89.31.27:9001/boulder/findBy/index/1';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(){
 			let data;
@@ -210,7 +210,7 @@
 	function findByGradeGreaterThanEqual(){
 		clearTable();
 		const Http = new XMLHttpRequest();
-		const url = 'http://34.89.31.27/Boulder/findBy/gradeGreaterThanEqual/{G}';
+		const url = 'http://34.89.31.27:9001/Boulder/findBy/gradeGreaterThanEqual/{G}';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(){
 			let data;
@@ -239,7 +239,7 @@
 	function findByGradeLessThan(){
 		clearTable();
 		const Http = new XMLHttpRequest();
-		const url = 'http://34.89.31.27/boulder/findBy/gradeLessThan/{G}';
+		const url = 'http://34.89.31.27:9001/boulder/findBy/gradeLessThan/{G}';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(){
 			let data;
@@ -267,7 +267,7 @@
 	function findByGradeLessThanEqual(){
 		clearTable();
 		const Http = new XMLHttpRequest();
-		const url = 'http://34.89.31.27/boulder/findBy/gradeLessThanEqual/{G}';
+		const url = 'http://34.89.31.27:9001/boulder/findBy/gradeLessThanEqual/{G}';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(){
 			let data;
@@ -295,7 +295,7 @@
 	function findByGradeBetween(){
 		clearTable();
 		const Http = new XMLHttpRequest();
-		const url = 'http://34.89.31.27/boulder/findBy/gradeBetween/{G1}/{G2}';
+		const url = 'http://34.89.31.27:9001/boulder/findBy/gradeBetween/{G1}/{G2}';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(){
 			let data;
@@ -323,7 +323,7 @@
 	function findByClimber(){
 		clearTable();
 		const Http = new XMLHttpRequest();
-		const url = 'http://34.89.31.27/boulder/findBy/Climber/{C}';
+		const url = 'http://34.89.31.27:9001/boulder/findBy/Climber/{C}';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(){
 			let data;
@@ -351,7 +351,7 @@
 	function findByDateNum(){
 		clearTable();
 		const Http = new XMLHttpRequest();
-		const url = 'http://34.89.31.27/boulder/findBy/Date/{D}';
+		const url = 'http://34.89.31.27:9001/boulder/findBy/Date/{D}';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(){
 			let data;
@@ -379,7 +379,7 @@
 	function findByLocation(){
 		clearTable();
 		const Http = new XMLHttpRequest();
-		const url = 'http://34.89.31.27/boulder/findBy/location/{L}';
+		const url = 'http://34.89.31.27:9001/boulder/findBy/location/{L}';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(){
 			let data;
@@ -432,7 +432,7 @@
 	}
 
 	function deleteBoulder(url2){
-		const url = 'http://34.89.31.27/boulder/delete/' + url2;
+		const url = 'http://34.89.31.27:9001/boulder/delete/' + url2;
 		const http = new XMLHttpRequest();
 		http.open("DELETE", url, true);
 		console.log(url2);
