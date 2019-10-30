@@ -28,6 +28,7 @@
 			<td><label> Date </label></td>
 			<td><label>Location </label></td>
 			<td><label> Climber </label></td>
+			<td><label> Actions </label></td>
 		</tr>
 	</table>
 
@@ -430,7 +431,12 @@
 		let dateF = document.getElementById("dateNum");
 		let locationF = document.getElementById("location");
 		let climberF = document.getElementById("climber");
-		let data = JSON.stringify({"id": "", "grade": gradeF.value, "dateNum": dateF.value, "location": locationF.value, "climber": climberF.value});
+		let data = JSON.stringify(
+					{"id": "",
+					"grade": gradeF.value,
+					"dateNum": dateF.value,
+					"location": locationF.value,
+					"climber": climberF.value});
 		http.send(data);
 		return false;
 	}
