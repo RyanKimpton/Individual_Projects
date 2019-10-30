@@ -91,11 +91,9 @@
 					let deleteButton = document.createElement('span');
 					//Styling
 					deleteButton.className = "glyphicon glyphicon-remove";
-					console.log("Button created")
 					deleteButton.style.color = "red";
 					//Function to control what happens when you press the button
 					deleteButton.onclick = function(){
-						console.log("Button pressed");
 						deleteButton.id= item.id;
 						//Calls a function to handle your delete request
 						deleteBoulder(deleteButton.id);
@@ -434,12 +432,11 @@
 	}
 
 	function deleteBoulder(url2){
-		console.log("Start of delete function")
 		const url = 'http://34.89.31.27:9001/boulder/delete/' + url2;
 		const http = new XMLHttpRequest();
 		http.open("DELETE", url, true);
-		console.log("URL" + url);
 		http.send();
+		showAll();
 	}
 
 
