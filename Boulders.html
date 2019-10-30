@@ -436,7 +436,9 @@
 		const http = new XMLHttpRequest();
 		http.open("DELETE", url, true);
 		http.send();
-		showAll();
+		if(http.readyState === 4){
+			showAll();
+		}
 	}
 
 
