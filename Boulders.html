@@ -432,13 +432,50 @@
 		let locationF = document.getElementById("location");
 		let climberF = document.getElementById("climber");
 		let data = JSON.stringify(
-					{"id": "",
-					"grade": gradeF.value,
-					"dateNum": dateF.value,
-					"location": locationF.value,
-					"climber": climberF.value});
+			{"id": "",
+			 "grade": gradeF.value,
+			 "dateNum": dateF.value,
+			 "location": locationF.value,
+			 "climber": climberF.value
+			}
+		);
 		http.send(data);
 		return false;
+	}
+	
+	function addBoulderInTable(){
+		let tableRef = document.getElementById('calendartable');
+
+		let newRow   = tableRef.insertRow(tableRef.rows.length);
+
+		let newCell1 = newRow.insertCell(1);
+		let newCell2 = newRow.insertCell(2);
+		let newCell3 = newRow.insertCell(3);
+		let newCell4 = newRow.insertCell(4);
+		let newCell5 = newRow.insertCell(5);
+
+		let input1 = document.createElement('input'),
+		    input2 = document.createElement('input'),
+		    input3 = document.createElement('input'),
+		    input4 = document.createElement('input'),
+			input5 = document.createElement('submit');
+
+		input1.id="grade";
+		input2.id="dateNum";
+		input3.id="location";
+		input4.id="climber";
+		input5.onclick = function(){
+			addBoulder();
+		};
+
+		newCell1.appendChild(input1);
+		newCell2.appendChild(input2);
+		newCell3.appendChild(input3);
+		newCell4.appendChild(input4);
+		newCell5.appendChild(input5);
+
+
+
 	}
 
 	function deleteBoulder(url2){
@@ -452,9 +489,6 @@
 			}
 		}
 	}
-
-
-
 
 	</script>
 	<input type = "button" value = "Show all" onclick = "showAll()">
@@ -470,12 +504,12 @@
 	<input type = "button" value = "Find By Location" onclick = "findByLocation()">
 
 
-	<form method="post" onsubmit="return addBoulder()">
-		Grade:<input type="text" id="grade" Name="grade">
-		Date:<input type="text" id="dateNum" Name="dateNum">
-		Location:<input type="text" id="location" Name="location">
-		Climber:<input type="text" id="climber" Name="climber">
-		<input type="submit">
+<!--	<form method="post" onsubmit="return addBoulder()">-->
+<!--		Grade:<input type="text" id="grade" Name="grade">-->
+<!--		Date:<input type="text" id="dateNum" Name="dateNum">-->
+<!--		Location:<input type="text" id="location" Name="location">-->
+<!--		Climber:<input type="text" id="climber" Name="climber">-->
+<!--		<input type="submit">-->
 	</form>
 
 
