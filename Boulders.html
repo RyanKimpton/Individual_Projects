@@ -406,7 +406,9 @@
 
 
 	function addBoulder(){
-		checkValues();
+		if(checkValues() === false){
+			return false;
+		}
 		const url = 'http://34.89.31.27:9001/boulder/add';
 		const http = new XMLHttpRequest();
 		http.onload = function(){
@@ -433,29 +435,10 @@
 		const url = 'http://34.89.31.27/boulder/delete/' + url2;
 		const http = new XMLHttpRequest();
 		http.open("DELETE", url, true);
-		http.onreadystatechange = function(){
-			console.log("first" + url);
-			if(http.readyState === 4){
-				console.log("second" + url);
-				showAll();
-			}
-		}
+		console.log(url2);
+		http.send();
 	}
 
-
-	// function removeUser() {
-	// 	$.ajax({
-	// 		type: "DELETE",
-	// 		url: "http://localhost:9001/boulder/delete",
-	// 		success: function () {
-	// 			// window.location.reload();
-	// 			$('#BoulderTable').remove();
-	// 		},
-	// 		failure: function (errMsg) {
-	// 			console.log(errMsg.toString())
-	// 		}
-	// 	});
-	// }
 
 	</script>
 	<input type = "button" value = "Show all" onclick = "showAll()">
