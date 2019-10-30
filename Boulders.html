@@ -91,9 +91,11 @@
 					let deleteButton = document.createElement('span');
 					//Styling
 					deleteButton.className = "glyphicon glyphicon-remove";
+					console.log("Button created")
 					deleteButton.style.color = "red";
 					//Function to control what happens when you press the button
 					deleteButton.onclick = function(){
+						console.log("Button pressed");
 						deleteButton.id= item.id;
 						//Calls a function to handle your delete request
 						deleteBoulder(deleteButton.id);
