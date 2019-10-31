@@ -18,9 +18,8 @@ public class LeadController {
     }
 
     @CrossOrigin
-    @PostMapping("/lead/add/{G}/{H}/{D}/{L}/{C}/{P}")
-    public Lead LeadAdd(@PathVariable String G, @PathVariable int H, @PathVariable String D, @PathVariable String L, @PathVariable String C, @PathVariable String P){
-        Lead ld = new Lead(G, H, D, L, C, P);
+    @PostMapping("/lead/add")
+    public Lead LeadAdd(@RequestBody Lead ld){
         repo.saveAndFlush(ld);
         return ld;
     }
