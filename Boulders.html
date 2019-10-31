@@ -70,45 +70,10 @@
 
 	function showAll(){
 		clearTable();
-
-        let tableRef = document.getElementById('BoulderTable');
-
-        let newRowT   = tableRef.insertRow(tableRef.rows.length);
-
-        let newCell0 = newRowT.insertCell(0);
-        let newCell1 = newRowT.insertCell(1);
-        let newCell2 = newRowT.insertCell(2);
-        let newCell3 = newRowT.insertCell(3);
-        let newCell4 = newRowT.insertCell(4);
-        let newCell5 = newRowT.insertCell(5);
-
-        let input0 = document.createElement('input'),
-            input1 = document.createElement('input'),
-            input2 = document.createElement('input'),
-            input3 = document.createElement('input'),
-            input4 = document.createElement('input'),
-            input5 = document.createElement('span');
-
-        input1.id="grade";
-        input2.id="dateNum";
-        input3.id="location";
-        input4.id="climber";
-        input5.onclick = function(){
-            addBoulder();
-        };
-        input5.className = "glyphicon glyphicon-plus";
-        input5.color = "Green";
-
-        newCell0.appendChild(input0);
-        newCell1.appendChild(input1);
-        newCell2.appendChild(input2);
-        newCell3.appendChild(input3);
-        newCell4.appendChild(input4);
-        newCell5.appendChild(input5);
+		newTableRow();
 
 		const Http = new XMLHttpRequest();
 		const url = 'http://34.89.31.27:9001/boulder/showAll';
-		console.log(url);
 		Http.open('GET', url);
 		Http.onreadystatechange = function(){
 			let data;
@@ -144,7 +109,7 @@
 					editButton.style.color = "yellow";
 					editButton.style.outlineColor = "black";
 					editButton.onclick = function(){
-
+						editTableRow(item);
 					};
 					newRow.appendChild(editButton);
 
@@ -161,6 +126,112 @@
 		};
 	Http.send();
 	}
+
+	function newTableRow(){
+		let tableRef = document.getElementById('BoulderTable');
+
+		let newRowT   = tableRef.insertRow(tableRef.rows.length);
+
+		let newCell0 = newRowT.insertCell(0);
+		let newCell1 = newRowT.insertCell(1);
+		let newCell2 = newRowT.insertCell(2);
+		let newCell3 = newRowT.insertCell(3);
+		let newCell4 = newRowT.insertCell(4);
+		let newCell5 = newRowT.insertCell(5);
+
+		let input0 = document.createElement('input'),
+			input1 = document.createElement('input'),
+			input2 = document.createElement('input'),
+			input3 = document.createElement('input'),
+			input4 = document.createElement('input'),
+			input5 = document.createElement('span');
+
+		input1.id="grade";
+		input2.id="dateNum";
+		input3.id="location";
+		input4.id="climber";
+		input5.onclick = function(){
+			addBoulder();
+		};
+		input5.className = "glyphicon glyphicon-plus";
+		input5.color = "Green";
+
+		newCell0.appendChild(input0);
+		newCell1.appendChild(input1);
+		newCell2.appendChild(input2);
+		newCell3.appendChild(input3);
+		newCell4.appendChild(input4);
+		newCell5.appendChild(input5);
+
+		
+	}
+
+	function newUpdateRow(I, G, D, L, C){
+		let tableRef = document.getElementById('BoulderTable');
+
+		let newRowT   = tableRef.insertRow(tableRef.rows.length);
+
+		let newCell0 = newRowT.insertCell(0);
+		let newCell1 = newRowT.insertCell(1);
+		let newCell2 = newRowT.insertCell(2);
+		let newCell3 = newRowT.insertCell(3);
+		let newCell4 = newRowT.insertCell(4);
+		let newCell5 = newRowT.insertCell(5);
+
+		let input0 = document.createElement('input'),
+			input1 = document.createElement('input'),
+			input2 = document.createElement('input'),
+			input3 = document.createElement('input'),
+			input4 = document.createElement('input'),
+			input5 = document.createElement('span');
+
+
+		input0.id="idUp";
+		input1.id="gradeUp";
+		input2.id="dateNumUp";
+		input3.id="locationUp";
+		input4.id="climberUp";
+		input5.onclick = function(){
+			updateBoulder();
+		};
+		input5.className = "glyphicon glyphicon-plus";
+		input5.color = "Green";
+
+		input0.value = I;
+		input1.value = G;
+		input2.value = D;
+		input3.value = L;
+		input4.value = C;
+
+		newCell0.appendChild(input0);
+		newCell1.appendChild(input1);
+		newCell2.appendChild(input2);
+		newCell3.appendChild(input3);
+		newCell4.appendChild(input4);
+		newCell5.appendChild(input5);
+
+		
+	}
+
+	function updateBoulder(){
+		const url = 'http://34.89.31.27:9001/boulder/update/whole/' + idUp.value + '/' + gradeUp.value + '/' + dateNumUp.value + '/' + locationUp.value + '/' + climberUp.value;
+		const http = new XMLHttpRequest();
+		http.open("PUT", url, true);
+		console.log(url);
+		http.send();
+		http.onreadystatechange = function(){
+			if(http.readyState === 4){
+				showAll();
+			}
+		}
+	}
+
+	function editTableRow(item){
+		newUpdateRow(item.id, item.grade, item.dateNum, item.location, item.climber);
+		console.log(item);
+		console.log(item.id);
+	}
+	
 
 
 
@@ -489,7 +560,13 @@
 		}
 	}
 
+	function editBoulder(){
+
+	}
+
 	</script>
+
+
 	<input type = "button" value = "Show all" onclick = "showAll()">
 	<input type = "button" value = "Find by index" onclick = "findByIndex()">
 	<input type = "button" value = "Find By Grade" onclick = "findByGrade()">
