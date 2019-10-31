@@ -79,35 +79,8 @@ public class BoulderController {
         return repo.findByLocationContainingIgnoreCase(L);
     }
 
-    @PutMapping("/boulder/update/grade/{I}/{G}")
-    public void updateBoulderGrade(@PathVariable long I, @PathVariable String G){
-        Boulder boulderInDB = repo.findById(I);
-        boulderInDB.setGrade(G);
-        repo.saveAndFlush(boulderInDB);
-    }
-
-    @PutMapping("/boulder/update/date/{I}/{D}")
-    public void updateBoulderDate(@PathVariable long I, @PathVariable String D){
-        Boulder boulderInDB = repo.findById(I);
-        boulderInDB.setDateNum(D);
-        repo.saveAndFlush(boulderInDB);
-    }
-
-    @PutMapping("/boulder/update/location/{I}/{L}")
-    public void updateBoulderLocation(@PathVariable long I, @PathVariable String L){
-        Boulder boulderInDB = repo.findById(I);
-        boulderInDB.setLocation(L);
-        repo.saveAndFlush(boulderInDB);
-    }
-
-    @PutMapping("/boulder/update/climber/{I}/{C}")
-    public void updateBoulderCLimber(@PathVariable long I, @PathVariable String C){
-        Boulder boulderInDB = repo.findById(I);
-        boulderInDB.setClimber(C);
-        repo.saveAndFlush(boulderInDB);
-    }
-
-    @PostMapping("/boulder/update/whole")
+    @CrossOrigin
+    @PostMapping("/boulder/update")
     public Boulder updateBoulderWhole(@RequestBody Boulder bould){
         repo.saveAndFlush(bould);
         return bould;

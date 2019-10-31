@@ -215,16 +215,16 @@
 	}
 
 	function updateBoulder(){
-		const url = 'http://34.89.31.27:9001/boulder/update/whole';
+		const url = 'http://34.89.31.27:9001/boulder/update';
 		const http = new XMLHttpRequest();
-		http.onload = function(){
-			showAll();
-		};
+		// http.onload = function(){
+		// 	showAll();
+		// };
 		http.open("POST", url, true);
 		http.setRequestHeader("Content-Type", "application/json");
 
 		let data = JSON.stringify(
-				{"id": idUp,
+				{"id": idUp.value,
 					"grade": gradeUp.value,
 					"dateNum": dateNumUp.value,
 					"location": locationUp.value,
@@ -527,7 +527,6 @@
 		};
 	Http.send();
 	}
-
 
 	function addBoulder(){
 		if(checkValues() === false){
