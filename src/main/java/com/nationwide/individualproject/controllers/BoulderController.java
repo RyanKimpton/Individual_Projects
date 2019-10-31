@@ -107,13 +107,10 @@ public class BoulderController {
         repo.saveAndFlush(boulderInDB);
     }
 
-    @PutMapping("/boulder/update/whole/{I}/{G}/{D}/{L}/{C}")
-    public void updateBoulderWhole(@PathVariable long I, @PathVariable String G, @PathVariable String D, @PathVariable String L, @PathVariable String C){
-        Boulder boulderInDB = repo.findById(I);
-        boulderInDB.setGrade(G);
-        boulderInDB.setDateNum(D);
-        boulderInDB.setLocation(L);
-        boulderInDB.setClimber(C);
+    @PutMapping("/boulder/update/whole")
+    public Boulder updateBoulderWhole(@RequestBody Boulder bould){
+        repo.saveAndFlush(bould);
+        return bould;
     }
 
     @DeleteMapping("/boulder/delete/{I}")

@@ -215,11 +215,22 @@
 	}
 
 	function updateBoulder(){
-		const url = 'http://34.89.31.27:9001/boulder/update/whole/' + idUp.value + '/' + gradeUp.value + '/' + dateNumUp.value + '/' + locationUp.value + '/' + climberUp.value;
+		const url = 'http://34.89.31.27:9001/boulder/update/whole';
 		const http = new XMLHttpRequest();
 		http.open("PUT", url, true);
-		console.log(url);
-		http.send();
+		http.setRequestHeader("Content-Type", "application/json");
+
+		let data = JSON.stringify(
+				{"id": idUp.value,
+					"grade": gradeUp.value,
+					"dateNum": dateNumUp.value,
+					"location": locationUp.value,
+					"climber": climberUp.value
+				}
+		);
+		
+
+		http.send(data);
 		http.onreadystatechange = function(){
 			if(http.readyState === 4){
 				showAll();
