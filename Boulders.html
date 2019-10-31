@@ -217,25 +217,23 @@
 	function updateBoulder(){
 		const url = 'http://34.89.31.27:9001/boulder/update/whole';
 		const http = new XMLHttpRequest();
-		http.open("PUT", url, true);
+		http.onload = function(){
+			showAll();
+		};
+		http.open("POST", url, true);
 		http.setRequestHeader("Content-Type", "application/json");
 
 		let data = JSON.stringify(
-				{"id": idUp.value,
+				{"id": idUp,
 					"grade": gradeUp.value,
 					"dateNum": dateNumUp.value,
 					"location": locationUp.value,
 					"climber": climberUp.value
 				}
 		);
-		
-
+		console.log(data);
 		http.send(data);
-		http.onreadystatechange = function(){
-			if(http.readyState === 4){
-				showAll();
-			}
-		}
+		return false;
 	}
 
 	function editTableRow(item){

@@ -107,7 +107,7 @@ public class BoulderController {
         repo.saveAndFlush(boulderInDB);
     }
 
-    @PutMapping("/boulder/update/whole")
+    @PostMapping("/boulder/update/whole")
     public Boulder updateBoulderWhole(@RequestBody Boulder bould){
         repo.saveAndFlush(bould);
         return bould;
