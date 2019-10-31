@@ -93,6 +93,7 @@
 				data.forEach(function (item) {
 					let table = document.getElementById("LeadTable");
 					let newRow = document.createElement("tr");
+					let tid = newRow.appendChild(document.createElement('td'));
 					let tGrade = newRow.appendChild(document.createElement('td'));
 					let tHeight = newRow.appendChild(document.createElement('td'));
 					let tDateNum = newRow.appendChild(document.createElement('td'));
@@ -118,7 +119,7 @@
 					};
 					newRow.appendChild(editButton);
 
-
+					tid.innerHTML = item.id;
 					tGrade.innerHTML = item.grade;
 					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;

@@ -74,4 +74,8 @@ public class Lead {
     public void setPartner(String partner) {
         this.partner = partner;
     }
+
+    public long getId() {
+        return id;
+    }
 }
