@@ -1,9 +1,7 @@
 
 <html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:spring="http://java.sun.com/xml/ns/javaee" lang="en">
 	<link rel="stylesheet" href="Styling.css">
-
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-	<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
 
 <head>
@@ -89,19 +87,13 @@
 					let tClimber = newRow.appendChild(document.createElement('td'));
 
 
-					//Creates the button
 					let deleteButton = document.createElement('span');
-					//Styling
 					deleteButton.className = "glyphicon glyphicon-remove";
 					deleteButton.style.color = "red";
-					//Function to control what happens when you press the button
 					deleteButton.onclick = function(){
 						deleteButton.id= item.id;
-						//Calls a function to handle your delete request
 						deleteBoulder(deleteButton.id);
 					};
-					//Adds a button to each row of the table
-
                     newRow.appendChild(deleteButton);
 
 					let editButton = document.createElement('span');
@@ -163,8 +155,6 @@
 		newCell3.appendChild(input3);
 		newCell4.appendChild(input4);
 		newCell5.appendChild(input5);
-
-		
 	}
 
 	function newUpdateRow(I, G, D, L, C){

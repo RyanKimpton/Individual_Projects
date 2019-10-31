@@ -1,70 +1,186 @@
 <html>
 
 <link rel="stylesheet" href="Styling.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
 <head>
 	<title> Leads </title>
-<head>
+</head>
 
 <body onload = "showAll()">
-	<table class = "tableFixHead" id="LeadTable" style = "width:30%">
+	<div>
+		<input type="button" onclick="location.href='FrontEnd.html'" value="All Climbs"/>
+		<input type="button" onclick="location.href='Boulders.html'" value="Boulders"/>
+		<input type="button" onclick="location.href='TopRopes.html'" value="Top Ropes"/>
+		<input type="button" onclick="location.href='Leads.html'" value="Leads"/>
+		<input type="button" onclick="location.href='Speeds.html'" value="Speeds"/>
+		<input type="button" onclick="location.href='Records.html'" value="Records"/>
+		<input type="button" onclick="location.href='Statistics.html'" value="Statistics"/>
+	</div>
+
+
+	<table class = "tableFixHead" id="LeadTable" style = "width:50%">
 			<tr>
+				<th> id </th>
 				<th> Grade </th>
 				<th> Height </th>
 				<th> Date </th>
 				<th> Location </th>
 				<th> Climber </th>
 				<th> Partner </th>
+				<th> Actions</th>
 			</tr>
 	</table>
 	
 	
 	<script>
 		function clearTable(){
-			for( var i = LeadTable.rows.length - 1; i > 0; i--){
+			for( let i = LeadTable.rows.length - 1; i > 0; i--){
 				LeadTable.deleteRow(i);
+			}
+		}
+
+		function checkValues(){
+			let grade = document.getElementById("grade");
+			let height = document.getElementById("height");
+			let dateNum = document.getElementById("dateNum");
+			let location = document.getElementById("location");
+			let climber = document.getElementById("climber");
+			let partner = document.getElementById("partner");
+
+			if(grade.value === ""){
+				alert("Please enter a grade for your climb");
+				return false;
+			}
+
+			if(height.value === ""){
+				alert("Please enter a height for your climb");
+				return false;
+			}
+
+			if(dateNum.value === ""){
+				alert("Please enter a date for your climb");
+				return false;
+			}
+
+			if(location.value === ""){
+				alert("Please enter a location for your climb");
+				return false;
+			}
+
+			if(climber.value === ""){
+				alert("Please enter the name of the climber");
+				return false;
+			}
+
+			if(partner.value === ""){
+				alert("please enter the name of the climber");
+				return false;
 			}
 		}
 		
 
 		function showAll(){
 		clearTable();
+		newTableRow();
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/lead/showAll';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var height = document.createElement("span")
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					var partner = document.createElement("span");
-					
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("LeadTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tHeight = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					let tPartner = newRow.appendChild(document.createElement('td'));
 
-					var table = document.getElementById("LeadTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tHeight = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-					var tPartner = newRow.appendChild(document.createElement('td'))
+					let deleteButton = document.createElement('span');
+					deleteButton.className = "glyphicon glyphicon-remove";
+					deleteButton.style.color = "red";
+					deleteButton.onclick = function(){
+						deleteButton.id= item.id;
+						deleteLead(deleteButton.id);
+					};
+					newRow.appendChild(deleteButton);
+
+					let editButton = document.createElement('span');
+					editButton.className = "glyphicon glyphicon-pencil";
+					editButton.style.color = "yellow";
+					editButton.style.outlineColor = "black";
+					editButton.onclick = function(){
+						editTableRow(item);
+					};
+					newRow.appendChild(editButton);
 
 
 					tGrade.innerHTML = item.grade;
+					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
+					tPartner.innerHTML = item.partner;
 
-					table.appendChild(newRow);	
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
+
+	function newTableRow(){
+		let tableRef = document.getElementById('LeadTable');
+
+		let newRowT   = tableRef.insertRow(tableRef.rows.length);
+
+		let newCell0 = newRowT.insertCell(0);
+		let newCell1 = newRowT.insertCell(1);
+		let newCell2 = newRowT.insertCell(2);
+		let newCell3 = newRowT.insertCell(3);
+		let newCell4 = newRowT.insertCell(4);
+		let newCell5 = newRowT.insertCell(5);
+		let newCell6 = newRowT.insertCell(6);
+		let newCell7 = newRowT.insertCell(7);
+
+
+
+		let input0 = document.createElement('input'),
+				input1 = document.createElement('input'),
+				input2 = document.createElement('input'),
+				input3 = document.createElement('input'),
+				input4 = document.createElement('input'),
+				input5 = document.createElement('input'),
+				input6 = document.createElement('input'),
+				input7 = document.createElement('span');
+
+		input1.id="grade";
+		input2.id="height";
+		input3.id="dateNum";
+		input4.id="location";
+		input5.id="climber";
+		input6.id="partner";
+		input7.id="submitButton";
+		input7.onclick = function(){
+			addLead();
+		};
+		input7.className = "glyphicon glyphicon-plus";
+		input7.color = "Green";
+
+		newCell0.appendChild(input0);
+		newCell1.appendChild(input1);
+		newCell2.appendChild(input2);
+		newCell3.appendChild(input3);
+		newCell4.appendChild(input4);
+		newCell5.appendChild(input5);
+		newCell6.appendChild(input6);
+		newCell7.appendChild(input7);
+	}
+
 	
 
 	function findByGrade(){
@@ -72,37 +188,35 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/lead/';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var height = document.createElement("span")
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					var partner = document.createElement("span");
-					
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
 
-					var table = document.getElementById("LeadTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tHeight = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-					var tPartner = newRow.appendChild(document.createElement('td'))
+
+
+					let table = document.getElementById("LeadTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tHeight = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					let tPartner = newRow.appendChild(document.createElement('td'));
 
 
 					tGrade.innerHTML = item.grade;
+					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
+					tPartner.innerHTML = item.partner;
 
-					table.appendChild(newRow);	
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -112,37 +226,35 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/lead/';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var height = document.createElement("span")
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					var partner = document.createElement("span");
-					
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
 
-					var table = document.getElementById("LeadTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tHeight = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-					var tPartner = newRow.appendChild(document.createElement('td'))
+
+
+					let table = document.getElementById("LeadTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tHeight = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					let tPartner = newRow.appendChild(document.createElement('td'));
 
 
 					tGrade.innerHTML = item.grade;
+					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
+					tPartner.innerHTML = item.partner;
 
-					table.appendChild(newRow);	
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -152,37 +264,35 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/lead/';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var height = document.createElement("span")
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					var partner = document.createElement("span");
-					
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
 
-					var table = document.getElementById("LeadTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tHeight = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-					var tPartner = newRow.appendChild(document.createElement('td'))
+
+
+					let table = document.getElementById("LeadTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tHeight = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					let tPartner = newRow.appendChild(document.createElement('td'));
 
 
 					tGrade.innerHTML = item.grade;
+					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
+					tPartner.innerHTML = item.partner;
 
-					table.appendChild(newRow);	
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -192,37 +302,33 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/lead/';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var height = document.createElement("span")
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					var partner = document.createElement("span");
-					
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
 
-					var table = document.getElementById("LeadTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tHeight = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-					var tPartner = newRow.appendChild(document.createElement('td'))
+
+					let table = document.getElementById("LeadTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tHeight = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					let tPartner = newRow.appendChild(document.createElement('td'));
 
 
 					tGrade.innerHTML = item.grade;
+					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
-
-					table.appendChild(newRow);	
+					tPartner.innerHTML = item.partner;
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -232,37 +338,34 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/lead/';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var height = document.createElement("span")
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					var partner = document.createElement("span");
-					
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
 
-					var table = document.getElementById("LeadTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tHeight = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-					var tPartner = newRow.appendChild(document.createElement('td'))
+
+
+					let table = document.getElementById("LeadTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tHeight = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					let tPartner = newRow.appendChild(document.createElement('td'));
 
 
 					tGrade.innerHTML = item.grade;
+					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
-
-					table.appendChild(newRow);	
+					tPartner.innerHTML = item.partner;
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -272,37 +375,34 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/lead/';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var height = document.createElement("span")
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					var partner = document.createElement("span");
-					
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
 
-					var table = document.getElementById("LeadTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tHeight = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-					var tPartner = newRow.appendChild(document.createElement('td'))
+
+					let table = document.getElementById("LeadTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tHeight = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					let tPartner = newRow.appendChild(document.createElement('td'));
 
 
 					tGrade.innerHTML = item.grade;
+					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
+					tPartner.innerHTML = item.partner;
 
-					table.appendChild(newRow);	
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -313,37 +413,35 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/lead/';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var height = document.createElement("span")
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					var partner = document.createElement("span");
-					
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
 
-					var table = document.getElementById("LeadTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tHeight = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-					var tPartner = newRow.appendChild(document.createElement('td'))
+
+
+					let table = document.getElementById("LeadTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tHeight = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					let tPartner = newRow.appendChild(document.createElement('td'));
 
 
 					tGrade.innerHTML = item.grade;
+					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
+					tPartner.innerHTML = item.partner;
 
-					table.appendChild(newRow);	
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -353,37 +451,35 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/lead/';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var height = document.createElement("span")
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					var partner = document.createElement("span");
-					
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
 
-					var table = document.getElementById("LeadTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tHeight = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-					var tPartner = newRow.appendChild(document.createElement('td'))
+
+
+					let table = document.getElementById("LeadTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tHeight = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					let tPartner = newRow.appendChild(document.createElement('td'));
 
 
 					tGrade.innerHTML = item.grade;
+					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
+					tPartner.innerHTML = item.partner;
 
-					table.appendChild(newRow);	
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -393,37 +489,35 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/lead/';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var height = document.createElement("span")
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					var partner = document.createElement("span");
-					
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
 
-					var table = document.getElementById("LeadTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tHeight = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-					var tPartner = newRow.appendChild(document.createElement('td'))
+
+
+					let table = document.getElementById("LeadTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tHeight = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					let tPartner = newRow.appendChild(document.createElement('td'));
 
 
 					tGrade.innerHTML = item.grade;
+					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
+					tPartner.innerHTML = item.partner;
 
-					table.appendChild(newRow);	
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -433,37 +527,35 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/lead/';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var height = document.createElement("span")
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					var partner = document.createElement("span");
-					
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
 
-					var table = document.getElementById("LeadTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tHeight = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-					var tPartner = newRow.appendChild(document.createElement('td'))
+
+
+					let table = document.getElementById("LeadTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tHeight = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					let tPartner = newRow.appendChild(document.createElement('td'));
 
 
 					tGrade.innerHTML = item.grade;
+					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
+					tPartner.innerHTML = item.partner;
 
-					table.appendChild(newRow);	
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -473,37 +565,34 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/lead/';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var height = document.createElement("span")
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					var partner = document.createElement("span");
-					
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
 
-					var table = document.getElementById("LeadTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tHeight = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-					var tPartner = newRow.appendChild(document.createElement('td'))
+
+					let table = document.getElementById("LeadTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tHeight = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					let tPartner = newRow.appendChild(document.createElement('td'));
 
 
 					tGrade.innerHTML = item.grade;
+					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
+					tPartner.innerHTML = item.partner;
 
-					table.appendChild(newRow);	
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -513,37 +602,34 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/lead/';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var height = document.createElement("span")
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					var partner = document.createElement("span");
-					
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
 
-					var table = document.getElementById("LeadTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tHeight = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-					var tPartner = newRow.appendChild(document.createElement('td'))
+
+					let table = document.getElementById("LeadTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tHeight = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					let tPartner = newRow.appendChild(document.createElement('td'));
 
 
 					tGrade.innerHTML = item.grade;
+					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
+					tPartner.innerHTML = item.partner;
 
-					table.appendChild(newRow);	
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -553,37 +639,34 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/lead/';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var height = document.createElement("span")
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					var partner = document.createElement("span");
-					
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
 
-					var table = document.getElementById("LeadTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tHeight = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-					var tPartner = newRow.appendChild(document.createElement('td'))
+
+					let table = document.getElementById("LeadTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tHeight = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					let tPartner = newRow.appendChild(document.createElement('td'));
 
 
 					tGrade.innerHTML = item.grade;
+					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
+					tPartner.innerHTML = item.partner;
 
-					table.appendChild(newRow);	
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -593,37 +676,34 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/lead/';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var height = document.createElement("span")
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					var partner = document.createElement("span");
-					
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
 
-					var table = document.getElementById("LeadTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tHeight = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-					var tPartner = newRow.appendChild(document.createElement('td'))
+
+					let table = document.getElementById("LeadTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tHeight = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					let tPartner = newRow.appendChild(document.createElement('td'));
 
 
 					tGrade.innerHTML = item.grade;
+					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
+					tPartner.innerHTML = item.partner;
 
-					table.appendChild(newRow);	
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -633,37 +713,34 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/lead/';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var height = document.createElement("span")
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					var partner = document.createElement("span");
-					
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
 
-					var table = document.getElementById("LeadTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tHeight = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-					var tPartner = newRow.appendChild(document.createElement('td'))
+
+					let table = document.getElementById("LeadTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tHeight = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					let tPartner = newRow.appendChild(document.createElement('td'));
 
 
 					tGrade.innerHTML = item.grade;
+					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
+					tPartner.innerHTML = item.partner;
 
-					table.appendChild(newRow);	
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
@@ -673,78 +750,115 @@
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/lead/';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var height = document.createElement("span")
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					var partner = document.createElement("span");
-					
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
 
-					var table = document.getElementById("LeadTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tHeight = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-					var tPartner = newRow.appendChild(document.createElement('td'))
+					let table = document.getElementById("LeadTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tHeight = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					let tPartner = newRow.appendChild(document.createElement('td'));
 
 
 					tGrade.innerHTML = item.grade;
+					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
+					tPartner.innerHTML = item.partner;
 
-					table.appendChild(newRow);	
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
 	}
 
 
-	function findByPartnet(){
+	function findByPartner(){
 		clearTable();
 		const Http = new XMLHttpRequest();
 		const url = 'http://localhost:9001/lead/';
 		Http.open('GET', url);
-		Http.onreadystatechange = function(e){
-			if (Http.readyState==4){
-				data=JSON.parse(Http.responseText);
-				data.forEach(function(item){
-					var grade = document.createElement("span");
-					var height = document.createElement("span")
-					var dateNum = document.createElement("span");
-					var location = document.createElement("span");
-					var climber = document.createElement("span");
-					var partner = document.createElement("span");
-					
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
 
-					var table = document.getElementById("LeadTable");
-					var newRow = document.createElement("tr");
-					var tGrade = newRow.appendChild(document.createElement('td'))
-					var tHeight = newRow.appendChild(document.createElement('td'))
-					var tDateNum = newRow.appendChild(document.createElement('td'))
-					var tLocation = newRow.appendChild(document.createElement('td'))
-					var tClimber = newRow.appendChild(document.createElement('td'))
-					var tPartner = newRow.appendChild(document.createElement('td'))
+
+					let table = document.getElementById("LeadTable");
+					let newRow = document.createElement("tr");
+					let tGrade = newRow.appendChild(document.createElement('td'));
+					let tHeight = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					let tPartner = newRow.appendChild(document.createElement('td'));
 
 
 					tGrade.innerHTML = item.grade;
+					tHeight.innerHTML = item.height;
 					tDateNum.innerHTML = item.dateNum;
 					tLocation.innerHTML = item.location;
 					tClimber.innerHTML = item.climber;
+					tPartner.innerHTML = item.partner;
 
-					table.appendChild(newRow);	
+					table.appendChild(newRow);
 				});
 			}
-		}
+		};
 	Http.send();
+	}
+
+	function addLead(){
+		if(checkValues() === false){
+			return false;
+		}
+		const url = 'http://34.89.31.27:9001/lead/add';
+		const http = new XMLHttpRequest();
+		http.onload = function(){
+			showAll();
+		};
+		http.open("POST", url, true);
+		http.setRequestHeader("Content-Type", "application/json");
+
+		let gradeF = document.getElementById("grade");
+		let heightF = document.getElementById("height");
+		let dateF = document.getElementById("dateNum");
+		let locationF = document.getElementById("location");
+		let climberF = document.getElementById("climber");
+		let partnerF = document.getElementById("partner");
+		let data = JSON.stringify(
+				{"id": "",
+					"grade": gradeF.value,
+					"height": heightF.value,
+					"dateNum": dateF.value,
+					"location": locationF.value,
+					"climber": climberF.value,
+					"partner": partnerF.value
+				}
+		);
+		http.send(data);
+		return false;
+	}
+
+	function deleteLead(url2){
+		const url = 'http://34.89.31.27:9001/lead/delete/' + url2;
+		const http = new XMLHttpRequest();
+		http.open("DELETE", url, true);
+		http.send();
+		http.onreadystatechange = function(){
+			if(http.readyState === 4){
+				showAll();
+			}
+		}
 	}
 	
 	
@@ -753,16 +867,6 @@
 	</script>
 	
 	
-	
-	<div>
-	<input type="button" onclick="location.href='FrontEnd.html'" value="All Climbs"/>
-	<input type="button" onclick="location.href='Boulders.html'" value="Boulders"/>
-	<input type="button" onclick="location.href='TopRopes.html'" value="Top Ropes"/>
-	<input type="button" onclick="location.href='Leads.html'" value="Leads"/>
-	<input type="button" onclick="location.href='Speeds.html'" value="Speeds"/>
-	<input type="button" onclick="location.href='Records.html'" value="Records"/>
-	<input type="button" onclick="location.href='Statistics.html'" value="Statistics"/>
-	</div>
 
 	
 	<form>
