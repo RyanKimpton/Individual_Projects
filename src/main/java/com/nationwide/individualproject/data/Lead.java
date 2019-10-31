@@ -9,13 +9,13 @@ public class Lead {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String grade;
-    private int height;
+    private String height;
     private String dateNum;
     private String location;
     private String climber;
     private String partner;
 
-    public Lead(String G, int H, String D, String L, String C, String P){
+    public Lead(String G, String H, String D, String L, String C, String P){
         grade = G;
         height = H;
         dateNum = D;
@@ -59,11 +59,11 @@ public class Lead {
         this.climber = climber;
     }
 
-    public int getHeight() {
+    public String getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(String height) {
         this.height = height;
     }
 

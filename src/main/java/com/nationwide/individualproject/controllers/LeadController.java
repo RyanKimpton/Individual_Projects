@@ -150,7 +150,7 @@ public class LeadController {
 
     @CrossOrigin
     @PutMapping("/lead/update/height/{I}/{H}")
-    public void updateLeadHeight(@PathVariable long I, @PathVariable int H){
+    public void updateLeadHeight(@PathVariable long I, @PathVariable String H){
         Lead leadInDB = repo.findById(I);
         leadInDB.setHeight(H);
         repo.saveAndFlush(leadInDB);
