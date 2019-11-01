@@ -79,7 +79,6 @@ public class BoulderController {
         return repo.findByLocationContainingIgnoreCase(L);
     }
 
-    @CrossOrigin
     @PostMapping("/boulder/update")
     public Boulder updateBoulderWhole(@RequestBody Boulder bould){
         repo.saveAndFlush(bould);

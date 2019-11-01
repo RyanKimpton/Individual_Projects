@@ -55,4 +55,8 @@ public class Speed {
     public void setClimber(String climber) {
         this.climber = climber;
     }
+
+    public long getId() {
+        return id;
+    }
 }
