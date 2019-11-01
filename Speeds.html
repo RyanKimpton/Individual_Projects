@@ -1,11 +1,15 @@
-<html>
+
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:spring="http://java.sun.com/xml/ns/javaee" lang="en">
+<link rel="stylesheet" href="Styling.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
 
 <head>
 	<title> Speeds </title>
-<head>
+</head>
 
-<body>
-	<div>
+<body onload = "showAll()">
+<div>
 	<input type="button" onclick="location.href='FrontEnd.html'" value="All Climbs"/>
 	<input type="button" onclick="location.href='Boulders.html'" value="Boulders"/>
 	<input type="button" onclick="location.href='TopRopes.html'" value="Top Ropes"/>
@@ -13,21 +17,568 @@
 	<input type="button" onclick="location.href='Speeds.html'" value="Speeds"/>
 	<input type="button" onclick="location.href='Records.html'" value="Records"/>
 	<input type="button" onclick="location.href='Statistics.html'" value="Statistics"/>
-	</div>
+</div>
 
-	<table style = "Width:50%" id = "SpeedTable">
-		<tr> Time </tr>
-		<tr> Date </tr>
-		<tr> Location </tr>
-		<tr> Climber </tr>
-	</table>
-	
-	<form>
-		time:<input type = "Text" id = "time" name = "time">
-		dateNum:<input type = "Text" id = "dateNum" name = "dateNum">
-		location:<input type = "Text" id = "location" name = "location">
-		climber:<input type = "Text" id = "climber" name = "climber">
-	</form>
+<table class = "tableFixHead" id="SpeedTable" style = "width:50%">
+	<tr>
+		<td><label> id </label></td>
+		<td><label> Time </label></td>
+		<td><label> Date </label></td>
+		<td><label>Location </label></td>
+		<td><label> Climber </label></td>
+		<td><label> Actions </label></td>
+	</tr>
+</table>
+
+<script type="text/javascript">
+
+	function clearTable(){
+		for( let i = SpeedTable.rows.length - 1; i > 0; i--){
+			SpeedTable.deleteRow(i);
+		}
+	}
+
+	function checkValues(){
+		let time = document.getElementById("time");
+		let dateNum = document.getElementById("dateNum");
+		let location = document.getElementById("location");
+		let climber = document.getElementById("climber");
+
+		if(time.value === ""){
+			alert("Please enter a time for your climb");
+			return false;
+		}
+
+		if(dateNum.value === ""){
+			alert("Please enter a date for your climb");
+			return false;
+		}
+
+		if(location.value === ""){
+			alert("Please enter a location for your climb");
+			return false;
+		}
+
+		if(climber.value === ""){
+			alert("Please enter the name of the climber");
+			return false;
+		}
+	}
+
+
+	function showAll(){
+		clearTable();
+		newTableRow();
+
+		const Http = new XMLHttpRequest();
+		const url = 'http://34.89.31.27:9001/speed/showAll';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("SpeedTable");
+					let newRow = document.createElement("tr");
+					let tid = newRow.appendChild(document.createElement('td'));
+					let tTime = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+
+
+					let deleteButton = document.createElement('span');
+					deleteButton.className = "glyphicon glyphicon-remove";
+					deleteButton.style.color = "red";
+					deleteButton.onclick = function(){
+						deleteButton.id= item.id;
+						deleteSpeed(deleteButton.id);
+					};
+					newRow.appendChild(deleteButton);
+
+					let editButton = document.createElement('span');
+					editButton.className = "glyphicon glyphicon-pencil";
+					editButton.style.color = "yellow";
+					editButton.style.outlineColor = "black";
+					editButton.onclick = function(){
+						editTableRow(item);
+					};
+					newRow.appendChild(editButton);
+
+
+					tid.innerHTML = item.id;
+					tTime.innerHTML = item.time;
+					tDateNum.innerHTML = item.dateNum;
+					tLocation.innerHTML = item.location;
+					tClimber.innerHTML = item.climber;
+
+					table.appendChild(newRow);
+				});
+			}
+		};
+		Http.send();
+	}
+
+	function newTableRow(){
+		let tableRef = document.getElementById('SpeedTable');
+
+		let newRowT   = tableRef.insertRow(tableRef.rows.length);
+
+		let newCell0 = newRowT.insertCell(0);
+		let newCell1 = newRowT.insertCell(1);
+		let newCell2 = newRowT.insertCell(2);
+		let newCell3 = newRowT.insertCell(3);
+		let newCell4 = newRowT.insertCell(4);
+		let newCell5 = newRowT.insertCell(5);
+
+		let input0 = document.createElement('input'),
+				input1 = document.createElement('input'),
+				input2 = document.createElement('input'),
+				input3 = document.createElement('input'),
+				input4 = document.createElement('input'),
+				input5 = document.createElement('span');
+
+		input1.id="time";
+		input2.id="dateNum";
+		input3.id="location";
+		input4.id="climber";
+		input5.id="submitButton";
+		input5.onclick = function(){
+			addSpeed();
+		};
+		input5.className = "glyphicon glyphicon-plus";
+		input5.color = "Green";
+
+		newCell0.appendChild(input0);
+		newCell1.appendChild(input1);
+		newCell2.appendChild(input2);
+		newCell3.appendChild(input3);
+		newCell4.appendChild(input4);
+		newCell5.appendChild(input5);
+	}
+
+	function newUpdateRow(I, G, D, L, C){
+		let tableRef = document.getElementById('SpeedTable');
+
+		let newRowT   = tableRef.insertRow(tableRef.rows.length);
+
+		let newCell0 = newRowT.insertCell(0);
+		let newCell1 = newRowT.insertCell(1);
+		let newCell2 = newRowT.insertCell(2);
+		let newCell3 = newRowT.insertCell(3);
+		let newCell4 = newRowT.insertCell(4);
+		let newCell5 = newRowT.insertCell(5);
+
+		let input0 = document.createElement('input'),
+				input1 = document.createElement('input'),
+				input2 = document.createElement('input'),
+				input3 = document.createElement('input'),
+				input4 = document.createElement('input'),
+				input5 = document.createElement('span');
+
+
+		input0.id="idUp";
+		input1.id="timeUp";
+		input2.id="dateNumUp";
+		input3.id="locationUp";
+		input4.id="climberUp";
+		input5.onclick = function(){
+			updateSpeed();
+		};
+		input5.className = "glyphicon glyphicon-plus";
+		input5.color = "Green";
+
+		input0.value = I;
+		input1.value = G;
+		input2.value = D;
+		input3.value = L;
+		input4.value = C;
+
+		newCell0.appendChild(input0);
+		newCell1.appendChild(input1);
+		newCell2.appendChild(input2);
+		newCell3.appendChild(input3);
+		newCell4.appendChild(input4);
+		newCell5.appendChild(input5);
+
+
+	}
+
+	function updateSpeed(){
+		const url = 'http://34.89.31.27:9001/speed/update';
+		const http = new XMLHttpRequest();
+		// http.onload = function(){
+		// 	showAll();
+		// };
+		http.open("POST", url, true);
+		http.setRequestHeader("Content-Type", "application/json");
+
+		let data = JSON.stringify(
+				{"id": idUp.value,
+					"time": timeUp.value,
+					"dateNum": dateNumUp.value,
+					"location": locationUp.value,
+					"climber": climberUp.value
+				}
+		);
+		console.log(data);
+		http.send(data);
+		return false;
+	}
+
+	function editTableRow(item){
+		newUpdateRow(item.id, item.time, item.dateNum, item.location, item.climber);
+		console.log(item);
+		console.log(item.id);
+	}
+
+
+
+
+	function findByIndex(){
+		clearTable();
+		const Http = new XMLHttpRequest();
+		const url = 'http://34.89.31.27:9001/speed/findBy/index/1';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4 && Http.status ===200) {
+				data = JSON.parse(Http.responseText);
+				let table = document.getElementById("SpeedTable");
+				let newRow = document.createElement("tr");
+				let tTime = newRow.appendChild(document.createElement('td'));
+				let tDateNum = newRow.appendChild(document.createElement('td'));
+				let tLocation = newRow.appendChild(document.createElement('td'));
+				let tClimber = newRow.appendChild(document.createElement('td'));
+				tTime.innerHTML = data.time;
+				tDateNum.innerHTML = data.dateNum;
+				tLocation.innerHTML = data.location;
+				tClimber.innerHTML = data.climber;
+
+				table.appendChild(newRow);
+
+			}
+		};
+		Http.send();
+	}
+
+
+	function findByTime(){
+		clearTable();
+		const Http = new XMLHttpRequest();
+		const url = 'http://34.89.31.27:9001/speed/findBy/time/{G}';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("SpeedTable");
+					let newRow = document.createElement("tr");
+					let tTime = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					tTime.innerHTML = data.time;
+					tDateNum.innerHTML = data.dateNum;
+					tLocation.innerHTML = data.location;
+					tClimber.innerHTML = data.climber;
+
+					table.appendChild(newRow);
+				});
+			}
+		};
+		Http.send();
+	}
+
+
+	function findByTimeGreaterThan(){
+		clearTable();
+		const Http = new XMLHttpRequest();
+		const url = 'http://34.89.31.27:9001/speed/findBy/timeGreaterThan/{G}';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("SpeedTable");
+					let newRow = document.createElement("tr");
+					let tTime = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					tTime.innerHTML = data.time;
+					tDateNum.innerHTML = data.dateNum;
+					tLocation.innerHTML = data.location;
+					tClimber.innerHTML = data.climber;
+
+					table.appendChild(newRow);
+				});
+			}
+		};
+		Http.send();
+	}
+
+
+	function findByTimeGreaterThanEqual(){
+		clearTable();
+		const Http = new XMLHttpRequest();
+		const url = 'http://34.89.31.27:9001/Speed/findBy/timeGreaterThanEqual/{G}';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("SpeedTable");
+					let newRow = document.createElement("tr");
+					let tTime = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					tTime.innerHTML = data.time;
+					tDateNum.innerHTML = data.dateNum;
+					tLocation.innerHTML = data.location;
+					tClimber.innerHTML = data.climber;
+
+					table.appendChild(newRow);
+				});
+			}
+		};
+		Http.send();
+	}
+
+
+	function findByTimeLessThan(){
+		clearTable();
+		const Http = new XMLHttpRequest();
+		const url = 'http://34.89.31.27:9001/speed/findBy/timeLessThan/{G}';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("SpeedTable");
+					let newRow = document.createElement("tr");
+					let tTime = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					tTime.innerHTML = data.time;
+					tDateNum.innerHTML = data.dateNum;
+					tLocation.innerHTML = data.location;
+					tClimber.innerHTML = data.climber;
+
+					table.appendChild(newRow);
+				});
+			}
+		};
+		Http.send();
+	}
+
+	function findByTimeLessThanEqual(){
+		clearTable();
+		const Http = new XMLHttpRequest();
+		const url = 'http://34.89.31.27:9001/speed/findBy/timeLessThanEqual/{G}';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("SpeedTable");
+					let newRow = document.createElement("tr");
+					let tTime = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					tTime.innerHTML = data.time;
+					tDateNum.innerHTML = data.dateNum;
+					tLocation.innerHTML = data.location;
+					tClimber.innerHTML = data.climber;
+
+					table.appendChild(newRow);
+				});
+			}
+		};
+		Http.send();
+	}
+
+	function findByTimeBetween(){
+		clearTable();
+		const Http = new XMLHttpRequest();
+		const url = 'http://34.89.31.27:9001/speed/findBy/timeBetween/{G1}/{G2}';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("SpeedTable");
+					let newRow = document.createElement("tr");
+					let tTime = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					tTime.innerHTML = data.time;
+					tDateNum.innerHTML = data.dateNum;
+					tLocation.innerHTML = data.location;
+					tClimber.innerHTML = data.climber;
+
+					table.appendChild(newRow);
+				});
+			}
+		};
+		Http.send();
+	}
+
+	function findByClimber(){
+		clearTable();
+		const Http = new XMLHttpRequest();
+		const url = 'http://34.89.31.27:9001/speed/findBy/Climber/{C}';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("SpeedTable");
+					let newRow = document.createElement("tr");
+					let tTime = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					tTime.innerHTML = data.time;
+					tDateNum.innerHTML = data.dateNum;
+					tLocation.innerHTML = data.location;
+					tClimber.innerHTML = data.climber;
+
+					table.appendChild(newRow);
+				});
+			}
+		};
+		Http.send();
+	}
+
+	function findByDateNum(){
+		clearTable();
+		const Http = new XMLHttpRequest();
+		const url = 'http://34.89.31.27:9001/speed/findBy/Date/{D}';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("SpeedTable");
+					let newRow = document.createElement("tr");
+					let tTime = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					tTime.innerHTML = data.time;
+					tDateNum.innerHTML = data.dateNum;
+					tLocation.innerHTML = data.location;
+					tClimber.innerHTML = data.climber;
+
+					table.appendChild(newRow);
+				});
+			}
+		};
+		Http.send();
+	}
+
+	function findByLocation(){
+		clearTable();
+		const Http = new XMLHttpRequest();
+		const url = 'http://34.89.31.27:9001/speed/findBy/location/{L}';
+		Http.open('GET', url);
+		Http.onreadystatechange = function(){
+			let data;
+			if (Http.readyState === 4) {
+				data = JSON.parse(Http.responseText);
+				data.forEach(function (item) {
+					let table = document.getElementById("SpeedTable");
+					let newRow = document.createElement("tr");
+					let tTime = newRow.appendChild(document.createElement('td'));
+					let tDateNum = newRow.appendChild(document.createElement('td'));
+					let tLocation = newRow.appendChild(document.createElement('td'));
+					let tClimber = newRow.appendChild(document.createElement('td'));
+					tTime.innerHTML = data.time;
+					tDateNum.innerHTML = data.dateNum;
+					tLocation.innerHTML = data.location;
+					tClimber.innerHTML = data.climber;
+
+					table.appendChild(newRow);
+				});
+			}
+		};
+		Http.send();
+	}
+
+	function addSpeed(){
+		if(checkValues() === false){
+			return false;
+		}
+		const url = 'http://34.89.31.27:9001/speed/add';
+		const http = new XMLHttpRequest();
+		http.onload = function(){
+			showAll();
+		};
+		http.open("POST", url, true);
+		http.setRequestHeader("Content-Type", "application/json");
+
+		let timeF = document.getElementById("time");
+		let dateF = document.getElementById("dateNum");
+		let locationF = document.getElementById("location");
+		let climberF = document.getElementById("climber");
+		let data = JSON.stringify(
+				{"id": "",
+					"time": timeF.value,
+					"dateNum": dateF.value,
+					"location": locationF.value,
+					"climber": climberF.value
+				}
+		);
+		console.log(data);
+		http.send(data);
+		return false;
+	}
+
+	function deleteSpeed(url2){
+		const url = 'http://34.89.31.27:9001/speed/delete/' + url2;
+		const http = new XMLHttpRequest();
+		http.open("DELETE", url, true);
+		http.send();
+		http.onreadystatechange = function(){
+			if(http.readyState === 4){
+				showAll();
+			}
+		}
+	}
+
+	function editSpeed(){
+
+	}
+
+</script>
+
+
+<input type = "button" value = "Show all" onclick = "showAll()">
+<input type = "button" value = "Find by index" onclick = "findByIndex()">
+<input type = "button" value = "Find By Time" onclick = "findByTime()">
+<input type = "button" value = "Find By Time Greater Than" onclick = "findByTimeGreaterThan()">
+<input type = "button" value = "Find By Time Greater Than Equal To" onclick = "findByTimeGreaterThanEqual()">
+<input type = "button" value = "Find By Time Less Than" onclick = "findByTimeLessThan()">
+<input type = "button" value = "Find By Time Less Than Equal To" onclick = "findByTimeLessThanEqual()">
+<input type = "button" value = "Find By Time Between" onclick = "findByTimeBetween()">
+<input type = "button" value = "Find By Climber" onclick = "findByClimber()">
+<input type = "button" value = "Find By Date" onclick = "findByDateNum()">
+<input type = "button" value = "Find By Location" onclick = "findByLocation()">
+
+
 
 </body>
 
