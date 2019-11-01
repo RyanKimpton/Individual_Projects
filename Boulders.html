@@ -1,5 +1,6 @@
 
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:spring="http://java.sun.com/xml/ns/javaee" lang="en">
+<html>
+
 	<link rel="stylesheet" href="Styling.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
@@ -19,16 +20,26 @@
 	<input type="button" onclick="location.href='Statistics.html'" value="Statistics"/>
 	</div>
 	
-	<table class = "tableFixHead" id="BoulderTable" style = "width:50%">
+	<table class = "hoverTable" id="BoulderTable" style="width:50%">
+		<colgroup>
+			<col span="1" style="width:3%">
+			<col span="1" style="width:3%">
+			<col span="1" style="width:7%">
+			<col span="1" style="width:5%">
+			<col span="1" style="width:6%">
+			<col span="1" style="width:2%">
+		</colgroup>
+
 		<tr>
-			<td><label> id </label></td>
-			<td><label> Grade </label></td>
-			<td><label> Date </label></td>
-			<td><label>Location </label></td>
-			<td><label> Climber </label></td>
-			<td><label> Actions </label></td>
+			<th>id</th>
+			<th>Grade</th>
+			<th>Date</th>
+			<th>Location</th>
+			<th>Climber</th>
+			<th>Actions</th>
 		</tr>
 	</table>
+
 
 	<script type="text/javascript">
 
@@ -137,6 +148,13 @@
 			input3 = document.createElement('input'),
 			input4 = document.createElement('input'),
 			input5 = document.createElement('span');
+
+		input0.style.width = "100%";
+		input1.style.width = "100%";
+		input2.style.width = "100%";
+		input3.style.width = "100%";
+		input4.style.width = "100%";
+		input5.style.width = "100%";
 
 		input1.id="grade";
 		input2.id="dateNum";
@@ -587,7 +605,9 @@
 <!--		<input type="submit">-->
 <!--	</form>-->
 
-
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 </body>
 

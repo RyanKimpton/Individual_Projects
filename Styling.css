@@ -1,5 +1,32 @@
-.tableFixHead          { overflow-y: auto; height: 100px; }
-.tableFixHead thead th { position: sticky; top: 0; }
-table  { border: 1px solid black; border-collapse: collapse; width: 100%; }
-th, td { padding: 8px 16px; }
-th     { background:#eee; }
+.tableFixHead{ overflow-y: auto; height: 100px; }
+
+
+.hoverTable{    
+    margin:0;
+    border-collapse:collapse; 
+}
+
+.hoverTable th{
+    padding:5px; text-align: center;
+}
+
+.hoverTable td{ 
+    padding:5px; border:darkslategray 1px solid;
+}
+/* Define the default color for all the table rows */
+.hoverTable tr{
+    background: white; text-align: center; vertical-align: middle;
+}
+/* Define the hover highlight color for the table row */
+.hoverTable tr:hover {
+        background-color: lightgray;
+}
+
+
+
+table{ border: 1px solid black; border-collapse: collapse}
+th  { background:#eee;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4); 
+    }
