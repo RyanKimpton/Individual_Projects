@@ -10,12 +10,12 @@ public class Speed {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private float time;
+    private String time;
     private String dateNum;
     private String location;
     private String climber;
 
-    public Speed(float T, String D, String L, String C){
+    public Speed(String T, String D, String L, String C){
         time = T;
         dateNum = D;
         location = L;
@@ -24,11 +24,11 @@ public class Speed {
 
     public Speed(){}
 
-    public float getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(float time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
