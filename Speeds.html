@@ -9,14 +9,18 @@
 </head>
 
 <body onload = "showAll()">
-<div>
-	<input type="button" onclick="location.href='FrontEnd.html'" value="All Climbs"/>
-	<input type="button" onclick="location.href='Boulders.html'" value="Boulders"/>
-	<input type="button" onclick="location.href='TopRopes.html'" value="Top Ropes"/>
-	<input type="button" onclick="location.href='Leads.html'" value="Leads"/>
-	<input type="button" onclick="location.href='Speeds.html'" value="Speeds"/>
-	<input type="button" onclick="location.href='Records.html'" value="Records"/>
-	<input type="button" onclick="location.href='Statistics.html'" value="Statistics"/>
+<div id="menuSidebar" class="sidebar">
+	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+	<a href="Boulders.html">Boulders</a>
+	<a href="TopRopes.html">Top Ropes</a>
+	<a href="Leads.html">Leads</a>
+	<a href="Speeds.html">Speeds</a>
+	<a href="Records.html">Records</a>
+	<a href="Statistics.html">Statistics</a>
+</div>
+
+<div id="main">
+	<button class="openbtn" onclick="openNav()">&#9776; Pages</button>
 </div>
 
 <table class = "hoverTable" id="SpeedTable" style = "width:50%">
@@ -40,7 +44,16 @@
 </table>
 
 <script type="text/javascript">
+	function openNav() {
+		document.getElementById("menuSidebar").style.width = "250px";
+		document.getElementById("main").style.marginLeft = "250px";
+	}
 
+	/* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+	function closeNav() {
+		document.getElementById("menuSidebar").style.width = "0";
+		document.getElementById("main").style.marginLeft = "0";
+	}
 	function clearTable(){
 		for( let i = SpeedTable.rows.length - 1; i > 0; i--){
 			SpeedTable.deleteRow(i);
