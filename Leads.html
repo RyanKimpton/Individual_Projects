@@ -24,7 +24,7 @@
 
 
 	<table class = "hoverTable" id="LeadTable" style = "width:50%">
-		<colgroup>
+		<!-- <colgroup>
 			<col span="1" style="width:3%">
 			<col span="1" style="width:3%">
 			<col span="1" style="width:7%">
@@ -32,20 +32,22 @@
 			<col span="1" style="width:6%">
 			<col span="1" style="width:6%">
 			<col span="1" style="width:6%">
-			<col span="1" style="width:2%">
-		</colgroup>	
+			<col span="1" style="width:3%">
+		</colgroup>	 -->
 		
 		<tr>
 			<th> id </th>
-			<th> Grade </th>
-			<th> Height </th>
-			<th> Date </th>
-			<th> Location </th>
-			<th> Climber </th>
-			<th> Partner </th>
+			<th onclick="orderByGrade()"> Grade </th>
+			<th onclick="orderByHeight()"> Height </th>
+			<th onclick="orderByDate()"> Date </th>
+			<th onclick="orderByLocation()"> Location </th>
+			<th onclick="orderByClimber()"> Climber </th>
+			<th onclick="orderByPartner()"> Partner </th>
 			<th> Actions</th>
 		</tr>
 	</table>
+
+	
 	
 	
 	<script>
@@ -106,7 +108,7 @@
 		}
 		
 
-		function showAll(){
+	function showAll(){
 		clearTable();
 		newTableRow();
 		const Http = new XMLHttpRequest();
@@ -116,45 +118,7 @@
 			let data;
 			if (Http.readyState === 4) {
 				data = JSON.parse(Http.responseText);
-				data.forEach(function (item) {
-					let table = document.getElementById("LeadTable");
-					let newRow = document.createElement("tr");
-					let tid = newRow.appendChild(document.createElement('td'));
-					let tGrade = newRow.appendChild(document.createElement('td'));
-					let tHeight = newRow.appendChild(document.createElement('td'));
-					let tDateNum = newRow.appendChild(document.createElement('td'));
-					let tLocation = newRow.appendChild(document.createElement('td'));
-					let tClimber = newRow.appendChild(document.createElement('td'));
-					let tPartner = newRow.appendChild(document.createElement('td'));
-
-					let deleteButton = document.createElement('span');
-					deleteButton.className = "glyphicon glyphicon-remove";
-					deleteButton.style.color = "red";
-					deleteButton.onclick = function(){
-						deleteButton.id= item.id;
-						deleteLead(deleteButton.id);
-					};
-					newRow.appendChild(deleteButton);
-
-					let editButton = document.createElement('span');
-					editButton.className = "glyphicon glyphicon-pencil";
-					editButton.style.color = "yellow";
-					editButton.style.outlineColor = "black";
-					editButton.onclick = function(){
-						editTableRow(item);
-					};
-					newRow.appendChild(editButton);
-
-					tid.innerHTML = item.id;
-					tGrade.innerHTML = item.grade;
-					tHeight.innerHTML = item.height;
-					tDateNum.innerHTML = item.dateNum;
-					tLocation.innerHTML = item.location;
-					tClimber.innerHTML = item.climber;
-					tPartner.innerHTML = item.partner;
-
-					table.appendChild(newRow);
-				});
+				tablizeRecords(data);
 			}
 		};
 	Http.send();
@@ -177,13 +141,13 @@
 
 
 		let input0 = document.createElement('input'),
-				input1 = document.createElement('input'),
-				input2 = document.createElement('input'),
-				input3 = document.createElement('input'),
-				input4 = document.createElement('input'),
-				input5 = document.createElement('input'),
-				input6 = document.createElement('input'),
-				input7 = document.createElement('span');
+			input1 = document.createElement('input'),
+			input2 = document.createElement('input'),
+			input3 = document.createElement('input'),
+			input4 = document.createElement('input'),
+			input5 = document.createElement('input'),
+			input6 = document.createElement('input'),
+			input7 = document.createElement('span');
 
 		input1.id="grade";
 		input2.id="height";
@@ -208,7 +172,126 @@
 		newCell7.appendChild(input7);
 	}
 
-	
+	function tablizeRecords(data){
+		data.forEach(function (item) {
+			let table = document.getElementById("LeadTable");
+			let newRow = document.createElement("tr");
+			let tid = newRow.appendChild(document.createElement('td'));
+			let tGrade = newRow.appendChild(document.createElement('td'));
+			let tHeight = newRow.appendChild(document.createElement('td'));
+			let tDateNum = newRow.appendChild(document.createElement('td'));
+			let tLocation = newRow.appendChild(document.createElement('td'));
+			let tClimber = newRow.appendChild(document.createElement('td'));
+			let tPartner = newRow.appendChild(document.createElement('td'));
+
+			let deleteButton = document.createElement('span');
+			deleteButton.className = "glyphicon glyphicon-remove";
+			deleteButton.style.color = "red";
+			deleteButton.onclick = function(){
+				deleteButton.id= item.id;
+				deleteLead(deleteButton.id);
+			};
+			newRow.appendChild(deleteButton);
+
+			let editButton = document.createElement('span');
+			editButton.className = "glyphicon glyphicon-pencil";
+			editButton.style.color = "yellow";
+			editButton.style.outlineColor = "black";
+			editButton.onclick = function(){
+				editTableRow(item);
+			};
+			newRow.appendChild(editButton);
+
+			tid.innerHTML = item.id;
+			tGrade.innerHTML = item.grade;
+			tHeight.innerHTML = item.height;
+			tDateNum.innerHTML = item.dateNum;
+			tLocation.innerHTML = item.location;
+			tClimber.innerHTML = item.climber;
+			tPartner.innerHTML = item.partner;
+
+			table.appendChild(newRow);
+		});
+	}
+
+	function orderByGrade(){
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/lead/sortBy/grade";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			let data;
+			if(http.readyState === 4){
+				data =JSON.parse(http.responseText);
+				tablizeRecords(data);
+			}
+		}
+	}
+
+	function orderByHeight(){
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/lead/sortBy/height";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			let data;
+			if(http.readyState === 4){
+				data =JSON.parse(http.responseText);
+				tablizeRecords(data);
+			}
+		}
+	}
+
+	function orderByDate(){
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/lead/sortBy/date";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			let data;
+			if(http.readyState === 4){
+				data =JSON.parse(http.responseText);
+				tablizeRecords(data);
+			}
+		}
+	}
+
+	function orderByLocation(){
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/lead/sortBy/location";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			let data;
+			if(http.readyState === 4){
+				data =JSON.parse(http.responseText);
+				tablizeRecords(data);
+			}
+		}
+	}
+
+	function orderByClimber(){
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/lead/sortBy/climber";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			let data;
+			if(http.readyState === 4){
+				data =JSON.parse(http.responseText);
+				tablizeRecords(data);
+			}
+		}
+	}
+
+	function orderByPartner(){
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/lead/sortBy/partner";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			let data;
+			if(http.readyState === 4){
+				data =JSON.parse(http.responseText);
+				tablizeRecords(data);
+			}
+		};
+		http.send();
+	}
 
 	function findByGrade(){
 		clearTable();

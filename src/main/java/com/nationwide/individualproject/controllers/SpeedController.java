@@ -30,22 +30,22 @@ public class SpeedController {
         return repo.findAll();
     }
 
-    @GetMapping("/speed/oderBy/time")
+    @GetMapping("/speed/sortBy/time")
     public ArrayList<Speed> orderByTime(){
         return repo.findAllByOrderByTime();
     }
 
-    @GetMapping("/speed/oderBy/date")
+    @GetMapping("/speed/sortBy/date")
     public ArrayList<Speed> orderByDate(){
         return repo.findAllByOrderByDateNum();
     }
 
-    @GetMapping("/speed/oderBy/location")
+    @GetMapping("/speed/sortBy/location")
     public ArrayList<Speed> orderByLocation(){
         return repo.findAllByOrderByLocation();
     }
 
-    @GetMapping("/speed/oderBy/climber")
+    @GetMapping("/speed/sortBy/climber")
     public ArrayList<Speed> orderByClimber(){
         return repo.findAllByOrderByClimber();
     }
