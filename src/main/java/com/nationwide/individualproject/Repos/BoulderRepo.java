@@ -11,6 +11,10 @@ import java.util.ArrayList;
 public interface BoulderRepo extends JpaRepository<Boulder, Integer> {
     Boulder findById(long I);
     ArrayList<Boulder> findAll();
+    ArrayList<Boulder> findAllByOrderByGrade();
+    ArrayList<Boulder> findAllByOrderByDateNum();
+    ArrayList<Boulder> findAllByOrderByLocation();
+    ArrayList<Boulder> findAllByOrderByClimber();
     ArrayList<Boulder> findByGrade(String G);
     ArrayList<Boulder> findByGradeGreaterThan(String G);
     ArrayList<Boulder> findByGradeGreaterThanEqual(String G);

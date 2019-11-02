@@ -29,6 +29,26 @@ public class BoulderController {
         return repo.findAll();
     }
 
+    @GetMapping("/boulder/sortBy/grade")
+    public ArrayList<Boulder> orderByGrade(){
+        return repo.findAllByOrderByGrade();
+    }
+
+    @GetMapping("/boulder/sortBy/date")
+    public ArrayList<Boulder> orderByDate(){
+        return repo.findAllByOrderByDateNum();
+    }
+
+    @GetMapping("/boulder/sortBy/location")
+    public ArrayList<Boulder> orderByLocation(){
+        return repo.findAllByOrderByLocation();
+    }
+
+    @GetMapping("/boulder/sortBy/climber")
+    public ArrayList<Boulder> orderByClimber(){
+        return repo.findAllByOrderByClimber();
+    }
+
     @GetMapping("/boulder/findBy/index/{I}")
     public Boulder findByIndex(@PathVariable long I){
         return repo.findById(I);
@@ -84,6 +104,8 @@ public class BoulderController {
         repo.saveAndFlush(bould);
         return bould;
     }
+
+
 
     @DeleteMapping("/boulder/delete/{I}")
     public void deleteBoulder(@PathVariable long I){

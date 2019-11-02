@@ -10,6 +10,12 @@ import java.util.ArrayList;
 public interface LeadRepo extends JpaRepository<Lead, Integer> {
     Lead findById(long I);
     ArrayList<Lead> findAll();
+    ArrayList<Lead> findAllByOrderByGrade();
+    ArrayList<Lead> findAllByOrderByHeight();
+    ArrayList<Lead> findAllByOrderByDateNum();
+    ArrayList<Lead> findAllByOrderByLocation();
+    ArrayList<Lead> findAllByOrderByClimber();
+    ArrayList<Lead> findAllByOrderByPartner();
     ArrayList<Lead> findByGrade(String G);
     ArrayList<Lead> findByGradeGreaterThan(String G);
     ArrayList<Lead> findByGradeGreaterThanEqual(String G);

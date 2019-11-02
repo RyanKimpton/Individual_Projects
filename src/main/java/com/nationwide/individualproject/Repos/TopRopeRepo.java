@@ -10,6 +10,12 @@ import java.util.ArrayList;
 public interface TopRopeRepo extends JpaRepository<TopRope, Integer> {
     TopRope findById(long I);
     ArrayList<TopRope> findAll();
+    ArrayList<TopRope> findAllByOrderByGrade();
+    ArrayList<TopRope> findAllByOrderByHeight();
+    ArrayList<TopRope> findAllByOrderByDateNum();
+    ArrayList<TopRope> findAllByOrderByLocation();
+    ArrayList<TopRope> findAllByOrderByClimber();
+    ArrayList<TopRope> findAllByOrderByPartner();
     ArrayList<TopRope> findByGrade(String G);
     ArrayList<TopRope> findByGradeGreaterThan(String G);
     ArrayList<TopRope> findByGradeGreaterThanEqual(String G);

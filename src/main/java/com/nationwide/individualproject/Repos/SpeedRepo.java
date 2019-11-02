@@ -8,6 +8,10 @@ import java.util.ArrayList;
 public interface SpeedRepo extends JpaRepository<Speed, Integer> {
     Speed findById(long I);
     ArrayList<Speed> findAll();
+    ArrayList<Speed> findAllByOrderByTime();
+    ArrayList<Speed> findAllByOrderByDateNum();
+    ArrayList<Speed> findAllByOrderByLocation();
+    ArrayList<Speed> findAllByOrderByClimber();
     ArrayList<Speed> findByTime(float T);
     ArrayList<Speed> findByTimeGreaterThan(float T);
     ArrayList<Speed> findByTimeGreaterThanEqual(float T);

@@ -31,7 +31,38 @@ public class LeadController {
         return repo.findAll();
     }
 
-    
+    @GetMapping("/lead/sortBy/grade")
+    public ArrayList<Lead> orderByGrade(){
+        return repo.findAllByOrderByGrade();
+    }
+
+    @GetMapping("/lead/sortBy/height")
+    public ArrayList<Lead> orderByHeight(){
+        return repo.findAllByOrderByHeight();
+    }
+
+    @GetMapping("/lead/sortBy/date")
+    public ArrayList<Lead> orderByDate(){
+        return repo.findAllByOrderByDateNum();
+    }
+
+    @GetMapping("/lead/sortBy/location")
+    public ArrayList<Lead> orderByLocation(){
+        return repo.findAllByOrderByLocation();
+    }
+
+    @GetMapping("/lead/sortBy/climber")
+    public ArrayList<Lead> orderByClimber(){
+        return repo.findAllByOrderByClimber();
+    }
+
+    @GetMapping("/lead/sortBy/partner")
+    public ArrayList<Lead> orderByPartner(){
+        return repo.findAllByOrderByPartner();
+    }
+
+
+
     @GetMapping("/lead/findBy/grade/{G}")
     public ArrayList<Lead> findByGrade(@PathVariable String G){
         return repo.findByGrade(G);
