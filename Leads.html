@@ -118,7 +118,7 @@
 			let data;
 			if (Http.readyState === 4) {
 				data = JSON.parse(Http.responseText);
-				tablizeRecords(data);
+				tablizeLeads(data);
 			}
 		};
 	Http.send();
@@ -172,7 +172,7 @@
 		newCell7.appendChild(input7);
 	}
 
-	function tablizeRecords(data){
+	function tablizeLeads(data){
 		data.forEach(function (item) {
 			let table = document.getElementById("LeadTable");
 			let newRow = document.createElement("tr");
@@ -215,6 +215,7 @@
 	}
 
 	function orderByGrade(){
+		clearTable();
 		const http = new XMLHttpRequest();
 		const url = "http://34.89.31.27:9001/lead/sortBy/grade";
 		http.open('GET', url);
@@ -222,25 +223,28 @@
 			let data;
 			if(http.readyState === 4){
 				data =JSON.parse(http.responseText);
-				tablizeRecords(data);
+				tablizeLeads(data);
 			}
-		}
+		};
+		http.send();
 	}
 
 	function orderByHeight(){
+		clearTable();
 		const http = new XMLHttpRequest();
 		const url = "http://34.89.31.27:9001/lead/sortBy/height";
 		http.open('GET', url);
 		http.onreadystatechange = function(){
-			let data;
 			if(http.readyState === 4){
-				data =JSON.parse(http.responseText);
-				tablizeRecords(data);
+				console.log("Here");
+				tablizeLeads(JSON.parse(http.responseText));
 			}
-		}
+		};
+		http.send();
 	}
 
 	function orderByDate(){
+		clearTable();
 		const http = new XMLHttpRequest();
 		const url = "http://34.89.31.27:9001/lead/sortBy/date";
 		http.open('GET', url);
@@ -248,12 +252,14 @@
 			let data;
 			if(http.readyState === 4){
 				data =JSON.parse(http.responseText);
-				tablizeRecords(data);
+				tablizeLeads(data);
 			}
-		}
+		};
+		http.send();
 	}
 
 	function orderByLocation(){
+		clearTable();
 		const http = new XMLHttpRequest();
 		const url = "http://34.89.31.27:9001/lead/sortBy/location";
 		http.open('GET', url);
@@ -261,12 +267,14 @@
 			let data;
 			if(http.readyState === 4){
 				data =JSON.parse(http.responseText);
-				tablizeRecords(data);
+				tablizeLeads(data);
 			}
-		}
+		};
+		http.send();
 	}
 
 	function orderByClimber(){
+		clearTable();
 		const http = new XMLHttpRequest();
 		const url = "http://34.89.31.27:9001/lead/sortBy/climber";
 		http.open('GET', url);
@@ -274,12 +282,14 @@
 			let data;
 			if(http.readyState === 4){
 				data =JSON.parse(http.responseText);
-				tablizeRecords(data);
+				tablizeLeads(data);
 			}
-		}
+		};
+		http.send();
 	}
 
 	function orderByPartner(){
+		clearTable();
 		const http = new XMLHttpRequest();
 		const url = "http://34.89.31.27:9001/lead/sortBy/partner";
 		http.open('GET', url);
@@ -287,7 +297,7 @@
 			let data;
 			if(http.readyState === 4){
 				data =JSON.parse(http.responseText);
-				tablizeRecords(data);
+				tablizeLeads(data);
 			}
 		};
 		http.send();

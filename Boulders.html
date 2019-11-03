@@ -36,10 +36,10 @@
 
 		<tr>
 			<th>id</th>
-			<th>Grade</th>
-			<th>Date</th>
-			<th>Location</th>
-			<th>Climber</th>
+			<th onclick="orderByGrade()">Grade</th>
+			<th onclick="orderByDate()">Date</th>
+			<th onclick="orderByLocation()">Location</th>
+			<th onclick="orderByClimber()">Climber</th>
 			<th>Actions</th>
 		</tr>
 	</table>
@@ -102,46 +102,50 @@
 			let data;
 			if (Http.readyState === 4) {
 				data = JSON.parse(Http.responseText);
-				data.forEach(function (item) {
-					let table = document.getElementById("BoulderTable");
-					let newRow = document.createElement("tr");
-					let tid = newRow.appendChild(document.createElement('td'));
-					let tGrade = newRow.appendChild(document.createElement('td'));
-					let tDateNum = newRow.appendChild(document.createElement('td'));
-					let tLocation = newRow.appendChild(document.createElement('td'));
-					let tClimber = newRow.appendChild(document.createElement('td'));
-
-
-					let deleteButton = document.createElement('span');
-					deleteButton.className = "glyphicon glyphicon-remove";
-					deleteButton.style.color = "red";
-					deleteButton.onclick = function(){
-						deleteButton.id= item.id;
-						deleteBoulder(deleteButton.id);
-					};
-                    newRow.appendChild(deleteButton);
-
-					let editButton = document.createElement('span');
-					editButton.className = "glyphicon glyphicon-pencil";
-					editButton.style.color = "yellow";
-					editButton.style.outlineColor = "black";
-					editButton.onclick = function(){
-						editTableRow(item);
-					};
-					newRow.appendChild(editButton);
-
-
-					tid.innerHTML = item.id;
-					tGrade.innerHTML = item.grade;
-					tDateNum.innerHTML = item.dateNum;
-					tLocation.innerHTML = item.location;
-					tClimber.innerHTML = item.climber;
-
-					table.appendChild(newRow);
-				});
+				tablizeBoulders(data);
 			}
 		};
 	Http.send();
+	}
+
+	function tablizeBoulders(){
+		data.forEach(function (item) {
+			let table = document.getElementById("BoulderTable");
+			let newRow = document.createElement("tr");
+			let tid = newRow.appendChild(document.createElement('td'));
+			let tGrade = newRow.appendChild(document.createElement('td'));
+			let tDateNum = newRow.appendChild(document.createElement('td'));
+			let tLocation = newRow.appendChild(document.createElement('td'));
+			let tClimber = newRow.appendChild(document.createElement('td'));
+
+
+			let deleteButton = document.createElement('span');
+			deleteButton.className = "glyphicon glyphicon-remove";
+			deleteButton.style.color = "red";
+			deleteButton.onclick = function(){
+				deleteButton.id= item.id;
+				deleteBoulder(deleteButton.id);
+			};
+			newRow.appendChild(deleteButton);
+
+			let editButton = document.createElement('span');
+			editButton.className = "glyphicon glyphicon-pencil";
+			editButton.style.color = "yellow";
+			editButton.style.outlineColor = "black";
+			editButton.onclick = function(){
+				editTableRow(item);
+			};
+			newRow.appendChild(editButton);
+
+
+			tid.innerHTML = item.id;
+			tGrade.innerHTML = item.grade;
+			tDateNum.innerHTML = item.dateNum;
+			tLocation.innerHTML = item.location;
+			tClimber.innerHTML = item.climber;
+
+			table.appendChild(newRow);
+		});
 	}
 
 	function newTableRow(){
@@ -187,6 +191,66 @@
 		newCell3.appendChild(input3);
 		newCell4.appendChild(input4);
 		newCell5.appendChild(input5);
+	}
+
+	function orderByGrade(){
+		clearTable();
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/boulder/sortBy/grade";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			let data;
+			if(http.readyState === 4){
+				data =JSON.parse(http.responseText);
+				tablizeBoulders(data);
+			}
+		};
+		http.send();
+	}
+
+	function orderByDate(){
+		clearTable();
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/boulder/sortBy/date";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			let data;
+			if(http.readyState === 4){
+				data =JSON.parse(http.responseText);
+				tablizeBoulders(data);
+			}
+		};
+		http.send();
+	}
+
+	function orderByLocation(){
+		clearTable();
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/boulder/sortBy/location";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			let data;
+			if(http.readyState === 4){
+				data =JSON.parse(http.responseText);
+				tablizeBoulders(data);
+			}
+		};
+		http.send();
+	}
+
+	function orderByClimber(){
+		clearTable();
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/boulder/sortBy/climber";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			let data;
+			if(http.readyState === 4){
+				data =JSON.parse(http.responseText);
+				tablizeBoulders(data);
+			}
+		};
+		http.send();
 	}
 
 	function newUpdateRow(I, G, D, L, C){
