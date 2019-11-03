@@ -31,6 +31,36 @@ public class TopRopeController {
         return repo.findAll();
     }
 
+    @GetMapping("/topRope/sortBy/grade")
+    public ArrayList<TopRope> orderByGrade(){
+        return repo.findAllByOrderByGrade();
+    }
+
+    @GetMapping("/topRope/sortBy/height")
+    public ArrayList<TopRope> orderByHeight(){
+        return repo.findAllByOrderByHeight();
+    }
+
+    @GetMapping("/topRope/sortBy/date")
+    public ArrayList<TopRope> orderByDate(){
+        return repo.findAllByOrderByDateNum();
+    }
+
+    @GetMapping("/topRope/sortBy/location")
+    public ArrayList<TopRope> orderByLocation(){
+        return repo.findAllByOrderByLocation();
+    }
+
+    @GetMapping("/topRope/sortBy/climber")
+    public ArrayList<TopRope> orderByClimber(){
+        return repo.findAllByOrderByClimber();
+    }
+
+    @GetMapping("/topRope/sortBy/partner")
+    public ArrayList<TopRope> orderByPartner(){
+        return repo.findAllByOrderByPartner();
+    }
+
     
     @GetMapping("/topRope/findBy/grade/{G}")
     public ArrayList<TopRope> findByGrade(@PathVariable String G){
