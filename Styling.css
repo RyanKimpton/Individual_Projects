@@ -9,7 +9,7 @@
 }
 
 .hoverTable th{
-    padding:5px; text-align: center;
+    padding:5px; text-align: center; background:lightgray;
 }
 
 .hoverTable td{ 
@@ -65,7 +65,7 @@
   .openbtn {
     font-size: 20px;
     cursor: pointer;
-    background-color: #111;
+    background-color: #b1b1b1;
     color: white;
     padding: 10px 15px;
     border: none;
