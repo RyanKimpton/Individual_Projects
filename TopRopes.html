@@ -24,7 +24,7 @@
 </div>
 
 
-<table class = "hoverTable" id="TopRopeTable" style = "width:50%, padding:5px";>
+<table class = "hoverTable" id="TopRopeTable" style = "width:50%">
 	<colgroup>
 		<col span="1" style="width:3%">
 		<col span="1" style="width:3%">
@@ -117,48 +117,52 @@
 			let data;
 			if (Http.readyState === 4) {
 				data = JSON.parse(Http.responseText);
-				data.forEach(function (item) {
-					let table = document.getElementById("TopRopeTable");
-					let newRow = document.createElement("tr");
-					let tid = newRow.appendChild(document.createElement('td'));
-					let tGrade = newRow.appendChild(document.createElement('td'));
-					let tHeight = newRow.appendChild(document.createElement('td'));
-					let tDateNum = newRow.appendChild(document.createElement('td'));
-					let tLocation = newRow.appendChild(document.createElement('td'));
-					let tClimber = newRow.appendChild(document.createElement('td'));
-					let tPartner = newRow.appendChild(document.createElement('td'));
-
-					let deleteButton = document.createElement('span');
-					deleteButton.className = "glyphicon glyphicon-remove";
-					deleteButton.style.color = "red";
-					deleteButton.onclick = function(){
-						deleteButton.id= item.id;
-						deleteTopRope(deleteButton.id);
-					};
-					newRow.appendChild(deleteButton);
-
-					let editButton = document.createElement('span');
-					editButton.className = "glyphicon glyphicon-pencil";
-					editButton.style.color = "yellow";
-					editButton.style.outlineColor = "black";
-					editButton.onclick = function(){
-						editTableRow(item);
-					};
-					newRow.appendChild(editButton);
-
-					tid.innerHTML = item.id;
-					tGrade.innerHTML = item.grade;
-					tHeight.innerHTML = item.height;
-					tDateNum.innerHTML = item.dateNum;
-					tLocation.innerHTML = item.location;
-					tClimber.innerHTML = item.climber;
-					tPartner.innerHTML = item.partner;
-
-					table.appendChild(newRow);
-				});
+				tablizeTopRopes(data);
 			}
 		};
 		Http.send();
+	}
+
+	function tablizeTopRopes(data){
+		data.forEach(function (item) {
+			let table = document.getElementById("TopRopeTable");
+			let newRow = document.createElement("tr");
+			let tid = newRow.appendChild(document.createElement('td'));
+			let tGrade = newRow.appendChild(document.createElement('td'));
+			let tHeight = newRow.appendChild(document.createElement('td'));
+			let tDateNum = newRow.appendChild(document.createElement('td'));
+			let tLocation = newRow.appendChild(document.createElement('td'));
+			let tClimber = newRow.appendChild(document.createElement('td'));
+			let tPartner = newRow.appendChild(document.createElement('td'));
+
+			let deleteButton = document.createElement('span');
+			deleteButton.className = "glyphicon glyphicon-remove";
+			deleteButton.style.color = "red";
+			deleteButton.onclick = function(){
+				deleteButton.id= item.id;
+				deleteTopRope(deleteButton.id);
+			};
+			newRow.appendChild(deleteButton);
+
+			let editButton = document.createElement('span');
+			editButton.className = "glyphicon glyphicon-pencil";
+			editButton.style.color = "yellow";
+			editButton.style.outlineColor = "black";
+			editButton.onclick = function(){
+				editTableRow(item);
+			};
+			newRow.appendChild(editButton);
+
+			tid.innerHTML = item.id;
+			tGrade.innerHTML = item.grade;
+			tHeight.innerHTML = item.height;
+			tDateNum.innerHTML = item.dateNum;
+			tLocation.innerHTML = item.location;
+			tClimber.innerHTML = item.climber;
+			tPartner.innerHTML = item.partner;
+
+			table.appendChild(newRow);
+		});
 	}
 
 	function newTableRow(){
@@ -207,6 +211,84 @@
 		newCell5.appendChild(input5);
 		newCell6.appendChild(input6);
 		newCell7.appendChild(input7);
+	}
+
+	function orderByGrade(){
+		clearTable();
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/topRope/sortBy/grade";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			if(http.readyState === 4){
+				tablizeTopRopes(JSON.parse(http.responseText));
+			}
+		};
+		http.send();
+	}
+
+	function orderByHeight(){
+		clearTable();
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/topRope/sortBy/height";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			if(http.readyState === 4){
+				tablizeTopRopes(JSON.parse(http.responseText));
+			}
+		};
+		http.send();
+	}
+
+	function orderByDate(){
+		clearTable();
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/topRope/sortBy/date";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			if(http.readyState === 4){
+				tablizeTopRopes(JSON.parse(http.responseText));
+			}
+		};
+		http.send();
+	}
+
+	function orderByLocation(){
+		clearTable();
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/topRope/sortBy/location";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			if(http.readyState === 4){
+				tablizeTopRopes(JSON.parse(http.responseText));
+			}
+		};
+		http.send();
+	}
+
+	function orderByClimber(){
+		clearTable();
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/topRope/sortBy/climber";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			if(http.readyState === 4){
+				tablizeTopRopes(JSON.parse(http.responseText));
+			}
+		};
+		http.send();
+	}
+
+	function orderByPartner(){
+		clearTable();
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/topRope/sortBy/partner";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			if(http.readyState === 4){
+				tablizeTopRopes(JSON.parse(http.responseText));
+			}
+		};
+		http.send();
 	}
 
 

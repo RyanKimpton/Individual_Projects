@@ -96,49 +96,103 @@
 		const url = 'http://34.89.31.27:9001/speed/showAll';
 		Http.open('GET', url);
 		Http.onreadystatechange = function(){
-			let data;
 			if (Http.readyState === 4) {
-				data = JSON.parse(Http.responseText);
-				data.forEach(function (item) {
-					let table = document.getElementById("SpeedTable");
-					let newRow = document.createElement("tr");
-					let tid = newRow.appendChild(document.createElement('td'));
-					let tTime = newRow.appendChild(document.createElement('td'));
-					let tDateNum = newRow.appendChild(document.createElement('td'));
-					let tLocation = newRow.appendChild(document.createElement('td'));
-					let tClimber = newRow.appendChild(document.createElement('td'));
-
-
-					let deleteButton = document.createElement('span');
-					deleteButton.className = "glyphicon glyphicon-remove";
-					deleteButton.style.color = "red";
-					deleteButton.onclick = function(){
-						deleteButton.id= item.id;
-						deleteSpeed(deleteButton.id);
-					};
-					newRow.appendChild(deleteButton);
-
-					let editButton = document.createElement('span');
-					editButton.className = "glyphicon glyphicon-pencil";
-					editButton.style.color = "yellow";
-					editButton.style.outlineColor = "black";
-					editButton.onclick = function(){
-						editTableRow(item);
-					};
-					newRow.appendChild(editButton);
-
-
-					tid.innerHTML = item.id;
-					tTime.innerHTML = item.time;
-					tDateNum.innerHTML = item.dateNum;
-					tLocation.innerHTML = item.location;
-					tClimber.innerHTML = item.climber;
-
-					table.appendChild(newRow);
-				});
+				tablizeSpeeds(JSON.parse(Http.responseText));
 			}
 		};
 		Http.send();
+	}
+
+	function tablizeSpeeds(data){
+		data.forEach(function (item) {
+			let table = document.getElementById("SpeedTable");
+			let newRow = document.createElement("tr");
+			let tid = newRow.appendChild(document.createElement('td'));
+			let tTime = newRow.appendChild(document.createElement('td'));
+			let tDateNum = newRow.appendChild(document.createElement('td'));
+			let tLocation = newRow.appendChild(document.createElement('td'));
+			let tClimber = newRow.appendChild(document.createElement('td'));
+
+
+			let deleteButton = document.createElement('span');
+			deleteButton.className = "glyphicon glyphicon-remove";
+			deleteButton.style.color = "red";
+			deleteButton.onclick = function(){
+				deleteButton.id= item.id;
+				deleteSpeed(deleteButton.id);
+			};
+			newRow.appendChild(deleteButton);
+
+			let editButton = document.createElement('span');
+			editButton.className = "glyphicon glyphicon-pencil";
+			editButton.style.color = "yellow";
+			editButton.style.outlineColor = "black";
+			editButton.onclick = function(){
+				editTableRow(item);
+			};
+			newRow.appendChild(editButton);
+
+
+			tid.innerHTML = item.id;
+			tTime.innerHTML = item.time;
+			tDateNum.innerHTML = item.dateNum;
+			tLocation.innerHTML = item.location;
+			tClimber.innerHTML = item.climber;
+
+			table.appendChild(newRow);
+		});
+	}
+
+	function orderByTime(){
+		clearTable();
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/speed/sortBy/time";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			if(http.readyState === 4){
+				tablizeTopRopes(JSON.parse(http.responseText));
+			}
+		};
+		http.send();
+	}
+
+	function orderByDate(){
+		clearTable();
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/speed/sortBy/date";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			if(http.readyState === 4){
+				tablizeTopRopes(JSON.parse(http.responseText));
+			}
+		};
+		http.send();
+	}
+
+	function orderByLocation(){
+		clearTable();
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/speed/sortBy/location";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			if(http.readyState === 4){
+				tablizeTopRopes(JSON.parse(http.responseText));
+			}
+		};
+		http.send();
+	}
+
+	function orderByClimber(){
+		clearTable();
+		const http = new XMLHttpRequest();
+		const url = "http://34.89.31.27:9001/speed/sortBy/climber";
+		http.open('GET', url);
+		http.onreadystatechange = function(){
+			if(http.readyState === 4){
+				tablizeTopRopes(JSON.parse(http.responseText));
+			}
+		};
+		http.send();
 	}
 
 	function newTableRow(){
