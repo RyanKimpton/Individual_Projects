@@ -119,6 +119,7 @@
 			let tClimber = newRow.appendChild(document.createElement('td'));
 
 
+
 			let deleteButton = document.createElement('span');
 			deleteButton.className = "glyphicon glyphicon-remove";
 			deleteButton.style.color = "red";
@@ -185,12 +186,12 @@
 		input5.className = "glyphicon glyphicon-plus";
 		input5.color = "Green";
 
-		newCell0.appendChild(input0);
-		newCell1.appendChild(input1);
-		newCell2.appendChild(input2);
-		newCell3.appendChild(input3);
-		newCell4.appendChild(input4);
-		newCell5.appendChild(input5);
+		let tid = newCell0.appendChild(input0);
+		let tgrad = newCell1.appendChild(input1);
+		let tdate = newCell2.appendChild(input2);
+		let tlocation = newCell3.appendChild(input3);
+		let tclimber = newCell4.appendChild(input4);
+		let tactions = newCell5.appendChild(input5);
 	}
 
 	function orderByGrade(){
@@ -297,15 +298,14 @@
 		newCell4.appendChild(input4);
 		newCell5.appendChild(input5);
 
-		
+
+
+
 	}
 
 	function updateBoulder(){
 		const url = 'http://34.89.31.27:9001/boulder/update';
 		const http = new XMLHttpRequest();
-		// http.onload = function(){
-		// 	showAll();
-		// };
 		http.open("POST", url, true);
 		http.setRequestHeader("Content-Type", "application/json");
 
@@ -317,15 +317,12 @@
 					"climber": climberUp.value
 				}
 		);
-		console.log(data);
 		http.send(data);
 		return false;
 	}
 
 	function editTableRow(item){
 		newUpdateRow(item.id, item.grade, item.dateNum, item.location, item.climber);
-		console.log(item);
-		console.log(item.id);
 	}
 	
 
@@ -662,17 +659,17 @@
 	</script>
 
 
-	<input type = "button" value = "Show all" onclick = "showAll()">
-	<input type = "button" value = "Find by index" onclick = "findByIndex()">
-	<input type = "button" value = "Find By Grade" onclick = "findByGrade()">
-	<input type = "button" value = "Find By Grade Greater Than" onclick = "findByGradeGreaterThan()">
-	<input type = "button" value = "Find By Grade Greater Than Equal To" onclick = "findByGradeGreaterThanEqual()">
-	<input type = "button" value = "Find By Grade Less Than" onclick = "findByGradeLessThan()">
-	<input type = "button" value = "Find By Grade Less Than Equal To" onclick = "findByGradeLessThanEqual()">
-	<input type = "button" value = "Find By Grade Between" onclick = "findByGradeBetween()">
-	<input type = "button" value = "Find By Climber" onclick = "findByClimber()">
-	<input type = "button" value = "Find By Date" onclick = "findByDateNum()">
-	<input type = "button" value = "Find By Location" onclick = "findByLocation()">
+<!--	<input type = "button" value = "Show all" onclick = "showAll()">-->
+<!--	<input type = "button" value = "Find by index" onclick = "findByIndex()">-->
+<!--	<input type = "button" value = "Find By Grade" onclick = "findByGrade()">-->
+<!--	<input type = "button" value = "Find By Grade Greater Than" onclick = "findByGradeGreaterThan()">-->
+<!--	<input type = "button" value = "Find By Grade Greater Than Equal To" onclick = "findByGradeGreaterThanEqual()">-->
+<!--	<input type = "button" value = "Find By Grade Less Than" onclick = "findByGradeLessThan()">-->
+<!--	<input type = "button" value = "Find By Grade Less Than Equal To" onclick = "findByGradeLessThanEqual()">-->
+<!--	<input type = "button" value = "Find By Grade Between" onclick = "findByGradeBetween()">-->
+<!--	<input type = "button" value = "Find By Climber" onclick = "findByClimber()">-->
+<!--	<input type = "button" value = "Find By Date" onclick = "findByDateNum()">-->
+<!--	<input type = "button" value = "Find By Location" onclick = "findByLocation()">-->
 
 
 <!--	<form method="post" onsubmit="return addBoulder()">-->
