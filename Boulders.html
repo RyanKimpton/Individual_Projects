@@ -186,12 +186,12 @@
 		input5.className = "glyphicon glyphicon-plus";
 		input5.color = "Green";
 
-		let tid = newCell0.appendChild(input0);
-		let tgrad = newCell1.appendChild(input1);
-		let tdate = newCell2.appendChild(input2);
-		let tlocation = newCell3.appendChild(input3);
-		let tclimber = newCell4.appendChild(input4);
-		let tactions = newCell5.appendChild(input5);
+		newCell0.appendChild(input0);
+		newCell1.appendChild(input1);
+		newCell2.appendChild(input2);
+		newCell3.appendChild(input3);
+		newCell4.appendChild(input4);
+		newCell5.appendChild(input5);
 	}
 
 	function orderByGrade(){
@@ -365,7 +365,7 @@
 			let data;
 			if (Http.readyState === 4) {
 				data = JSON.parse(Http.responseText);
-				data.forEach(function (item) {
+				data.forEach(function () {
 					let table = document.getElementById("BoulderTable");
 					let newRow = document.createElement("tr");
 					let tGrade = newRow.appendChild(document.createElement('td'));
@@ -394,7 +394,7 @@
 			let data;
 			if (Http.readyState === 4) {
 				data = JSON.parse(Http.responseText);
-				data.forEach(function (item) {
+				data.forEach(function () {
 					let table = document.getElementById("BoulderTable");
 					let newRow = document.createElement("tr");
 					let tGrade = newRow.appendChild(document.createElement('td'));
@@ -423,7 +423,7 @@
 			let data;
 			if (Http.readyState === 4) {
 				data = JSON.parse(Http.responseText);
-				data.forEach(function (item) {
+				data.forEach(function () {
 					let table = document.getElementById("BoulderTable");
 					let newRow = document.createElement("tr");
 					let tGrade = newRow.appendChild(document.createElement('td'));
@@ -452,7 +452,7 @@
 			let data;
 			if (Http.readyState === 4) {
 				data = JSON.parse(Http.responseText);
-				data.forEach(function (item) {
+				data.forEach(function () {
 					let table = document.getElementById("BoulderTable");
 					let newRow = document.createElement("tr");
 					let tGrade = newRow.appendChild(document.createElement('td'));
@@ -480,7 +480,7 @@
 			let data;
 			if (Http.readyState === 4) {
 				data = JSON.parse(Http.responseText);
-				data.forEach(function (item) {
+				data.forEach(function () {
 					let table = document.getElementById("BoulderTable");
 					let newRow = document.createElement("tr");
 					let tGrade = newRow.appendChild(document.createElement('td'));
@@ -508,7 +508,7 @@
 			let data;
 			if (Http.readyState === 4) {
 				data = JSON.parse(Http.responseText);
-				data.forEach(function (item) {
+				data.forEach(function () {
 					let table = document.getElementById("BoulderTable");
 					let newRow = document.createElement("tr");
 					let tGrade = newRow.appendChild(document.createElement('td'));
@@ -536,7 +536,7 @@
 			let data;
 			if (Http.readyState === 4) {
 				data = JSON.parse(Http.responseText);
-				data.forEach(function (item) {
+				data.forEach(function () {
 					let table = document.getElementById("BoulderTable");
 					let newRow = document.createElement("tr");
 					let tGrade = newRow.appendChild(document.createElement('td'));
@@ -564,7 +564,7 @@
 			let data;
 			if (Http.readyState === 4) {
 				data = JSON.parse(Http.responseText);
-				data.forEach(function (item) {
+				data.forEach(function () {
 					let table = document.getElementById("BoulderTable");
 					let newRow = document.createElement("tr");
 					let tGrade = newRow.appendChild(document.createElement('td'));
@@ -592,7 +592,7 @@
 			let data;
 			if (Http.readyState === 4) {
 				data = JSON.parse(Http.responseText);
-				data.forEach(function (item) {
+				data.forEach(function () {
 					let table = document.getElementById("BoulderTable");
 					let newRow = document.createElement("tr");
 					let tGrade = newRow.appendChild(document.createElement('td'));
