@@ -149,7 +149,7 @@
 			editButton.style.color = "yellow";
 			editButton.style.outlineColor = "black";
 			editButton.onclick = function(){
-				editTableRow(item);
+				editTableRow(item.id, item.grade, item.height,  item.dateNum, item.location, item.climber, item.partner);
 			};
 			newRow.appendChild(editButton);
 
@@ -163,6 +163,61 @@
 
 			table.appendChild(newRow);
 		});
+	}
+
+	function editTableRow(I, G, H, D, L, C, P){
+		let tableRef = document.getElementById('TopRopeTable');
+
+		let newRowT   = tableRef.insertRow(tableRef.rows.length);
+
+		let newCell0 = newRowT.insertCell(0);
+		let newCell1 = newRowT.insertCell(1);
+		let newCell2 = newRowT.insertCell(2);
+		let newCell3 = newRowT.insertCell(3);
+		let newCell4 = newRowT.insertCell(4);
+		let newCell5 = newRowT.insertCell(5);
+		let newcell6 = newRowT.insertCell(6);
+		let newCell7 = newRowT.insertCell(7);
+
+		let input0 = document.createElement('input'),
+				input1 = document.createElement('input'),
+				input2 = document.createElement('input'),
+				input3 = document.createElement('input'),
+				input4 = document.createElement('input'),
+				input5 = document.createElement('input'),
+				input6 = document.createElement('input'),
+				input7 = document.createElement('span');
+
+
+		input0.id="idUp";
+		input1.id="gradeUp";
+		input2.id="heightUp";
+		input3.id="dateNumUp";
+		input4.id="locationUp";
+		input5.id="climberUp";
+		input6.id="partnerUp";
+		input7.onclick = function(){
+			updateBoulder();
+		};
+		input7.className = "glyphicon glyphicon-plus";
+		input7.color = "Green";
+
+		input0.value = I;
+		input1.value = G;
+		input2.value = H;
+		input3.value = D;
+		input4.value = L;
+		input5.value = C;
+		input6.value = P;
+
+		newCell0.appendChild(input0);
+		newCell1.appendChild(input1);
+		newCell2.appendChild(input2);
+		newCell3.appendChild(input3);
+		newCell4.appendChild(input4);
+		newCell5.appendChild(input5);
+		newCell6.appendChild(input6);
+		newCell7.appendChild(input7);
 	}
 
 	function newTableRow(){
